@@ -40,20 +40,38 @@ export const addProduct = async (req, res) => {
 
       console.log(body, "body");
 
-      const { title, description, price, adminEmail } = body;
+      const { title, description,slug, price,adminEmail,category, productPictures, reviews } = body;
 
       const findAdmin = await Admin.find({ email: adminEmail });
 
       if (!findAdmin) {
         return res.send("please add admin first").status(201);
       }
+// Validate and parse JSON fields
+let parsedProductPictures = [];
+let parsedReviews = [];
+
+try {
+  if (productPictures) {
+    parsedProductPictures = JSON.parse(productPictures);
+  }
+  if (reviews) {
+    parsedReviews = JSON.parse(reviews);
+  }
+} catch (error) {
+  return res.status(400).json({ success: false, message: "Invalid JSON format" });
+}
 
       const createProduct = new Product({
         title,
         description,
         price,
+        slug,
         admin: findAdmin._id,
         image: imageUrl,
+        productPictures: parsedProductPictures,
+        reviews: parsedReviews,
+        category
       });
 
       const newProductCreated = await createProduct.save();
