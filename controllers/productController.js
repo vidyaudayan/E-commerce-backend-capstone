@@ -97,12 +97,16 @@ try {
     res.status(400).send("Please check data");
   }
 };*/
-
-const updateProduct = async (req, res, next) => {
-  res.send("Not written");
-};
-
-const deleteProduct = async (req, res, next) => {
-  res.send("Not written");
-};
+export const getOneProductById= async (req, res) => {
+  try{
+    const product=await Product.findOne({productId:req.params.id}).exec()
+    if(!product){
+     res.status(404).json({error:'product not found'})
+    }
+    res.status(200).json(product)
+    }catch(error){
+     console.log(error)
+     res.status(500).json({error:'internal error'})
+    }
+}
 

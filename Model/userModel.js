@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+
 const userSchema = new mongoose.Schema(
   {
     email: {
@@ -24,6 +25,12 @@ const userSchema = new mongoose.Schema(
       required: true,
       maxLength: 50,
     },
+    phoneNumber: {
+      type: Number,
+      required: true
+    },
+    
+   
     products: [{ type: mongoose.Types.ObjectId, ref: "Product" }],
   },
   { timestamps : true }

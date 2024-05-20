@@ -15,7 +15,7 @@ app.use('/api/v1/user',userRouter)
 app.use('/api/v1/products',productRouter)
 app.use('/api/v1/admin',adminRouter)
 
-const port = 3000
+const port = 3000;
 connectDb();
 
 app.get("/", (req, res) => {

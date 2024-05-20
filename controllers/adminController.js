@@ -1,7 +1,8 @@
 import bcrypt from "bcrypt";
 import Admin from "../Model/adminModel.js";
 import { adminToken } from "../utils/generateToken.js";
-
+import User from "../Model/userModel.js";
+import Product from "../Model/productModel.js";
 
 
   export const singup = async (req, res) => {
@@ -80,9 +81,6 @@ import { adminToken } from "../utils/generateToken.js";
   };
 
 
-
-
-
   export const deleteAdmin = async (req, res) => {
     const id = req.params.id;
     console.log(id);
@@ -97,5 +95,96 @@ import { adminToken } from "../utils/generateToken.js";
     }
   
     return res.send("deleted sucessfully");
+  };
+
+
+  
+  export const getAllUsers = async (req, res) => {
+    const users = await User.find();
+    return res.send(users);
+  };
+
+
+  export const getOneUserById= async (req, res) => {
+    try{
+      const user=await User.findOne({userId:req.params.id}).exec()
+      if(!user){
+       res.status(404).json({error:'User not found'})
+      }
+      res.status(200).json(user)
+      }catch(error){
+       console.log(error)
+       res.status(500).json({error:'internal error'})
+      }
+  }
+
+
+
+  export const updateUser = async (req, res) => {
+    const id = req.params.id;
+    console.log(id);
+  
+    const { firstName,lastName,email } = req.body;
+  
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: id },
+      { firstName,lastName,email  },{new: true,}
+    );
+  
+    if (!updatedUser) {
+      return res.send("User is not updated");
+    }
+    return res.send(updatedUser);
+  };
+
+
+  export const deleteUser = async (req, res) => {
+    const id = req.params.id;
+    console.log(id);
+    const user = await User.find({ _id: id });
+    if (!user) {
+      return res.send("User is not exist");
+    }
+    const deleteUser = await User.deleteOne({ _id: id });
+  
+    if (!deleteUser) {
+      return res.send("failed to delete");
+    }
+  
+    return res.send("deleted sucessfully");
+  };
+  
+
+ export  const updateProduct = async (req, res, next) => {
+    const id = req.params.id;
+    console.log(id);
+  
+    const { title,image,description,price,slug,category,productPictures,reviews} = req.body;
+  
+    const updatedProduct = await Product.findOneAndUpdate(
+      { _id: id },
+      { title,image,description,price,slug,category,productPictures,reviews},
+      {
+        new: true,
+      }
+    );
+  
+    if (!updatedProduct) {
+      return res.send("Product is not updated");
+    }
+  
+    console.log(updatedProduct);
+    return res.send(updatedProduct);
+  };
+
+  export const deleteProduct = async (req, res) => {
+    const id = req.params.id;
+  
+    const deleteId = await Product.deleteOne({ _id: id });
+  
+    if (!deleteId) {
+      return res.send("not deleted");
+    }
+    return res.send("Product deleted");
   };
   
