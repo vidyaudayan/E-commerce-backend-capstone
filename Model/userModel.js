@@ -32,6 +32,7 @@ const userSchema = new mongoose.Schema(
     
    
     products: [{ type: mongoose.Types.ObjectId, ref: "Product" }],
+    reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
   },
   { timestamps : true }
 );

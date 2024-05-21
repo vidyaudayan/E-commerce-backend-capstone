@@ -83,3 +83,18 @@ console.log(user)
     res.status(500).send('Server error');
   }
 };
+
+
+
+export const getUserReviews = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).populate('reviews');
+    if (!user) {
+      return res.status(404).send('User not found.');
+    }
+    res.status(200).json(user.reviews);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server error.');
+  }
+};

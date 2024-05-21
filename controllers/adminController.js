@@ -3,7 +3,7 @@ import Admin from "../Model/adminModel.js";
 import { adminToken } from "../utils/generateToken.js";
 import User from "../Model/userModel.js";
 import Product from "../Model/productModel.js";
-
+import Order from "../Model/orderModel.js";
 
   export const singup = async (req, res) => {
     try {
@@ -186,5 +186,32 @@ import Product from "../Model/productModel.js";
       return res.send("not deleted");
     }
     return res.send("Product deleted");
+  };
+  
+  // update order status
+
+export const updateOrderStatus = async (req, res) => {
+    try {
+      const {orderId} = req.params;
+      const { status } = req.body;
+  
+      const order = await Order.findById(orderId);
+  
+      if (!order) {
+        return res.status(404).json({ message: 'Order not found' });
+      }
+  
+      if (!['pending', 'shipped', 'delivered', 'cancelled'].includes(status)) {
+        return res.status(400).json({ message: 'Invalid status' });
+      }
+  
+      order.status = status;
+      await order.save();
+  
+      res.status(200).json(order);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Server error' });
+    }
   };
   

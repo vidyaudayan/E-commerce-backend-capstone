@@ -6,6 +6,10 @@ import cookieParser from "cookie-parser";
 import userRouter from "../routes/userRoutes.js";
 import productRouter from "../routes/productRoutes.js";
 import adminRouter from "../routes/adminRoutes.js";
+import categoryRouter from "../routes/categoryRoutes.js";
+import reviewRouter from "../routes/reviewRoutes.js";
+import cartRouter from "../routes/cartRoutes.js";
+import orderRouter from "../routes/orderRoutes.js";
 const app = express();
 
 app.use(express.json());
@@ -14,6 +18,12 @@ app.use(cookieParser())
 app.use('/api/v1/user',userRouter)
 app.use('/api/v1/products',productRouter)
 app.use('/api/v1/admin',adminRouter)
+app.use('/api/v1/categories',categoryRouter)
+app.use('/api/v1/review',reviewRouter)
+app.use('/api/v1/cart',cartRouter)
+app.use('/api/v1/order',orderRouter)
+
+
 
 const port = 3000;
 connectDb();

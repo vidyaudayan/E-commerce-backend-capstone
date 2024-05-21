@@ -3,14 +3,14 @@ import mongoose from "mongoose";
 const orderSchema = new mongoose.Schema(
   {
     user_id: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
       },
       products: [
         {
           product_id: {
-            type: Schema.Types.ObjectId,
+            type:mongoose. Schema.Types.ObjectId,
             ref: 'Product',
             required: true
           },
@@ -35,7 +35,7 @@ const orderSchema = new mongoose.Schema(
         default: 'pending'
       },
       payment_id: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Payment',
         required: true
       },
