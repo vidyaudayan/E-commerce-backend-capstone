@@ -12,4 +12,8 @@ export const adminToken = (user) => {
     });
   };
 
+  export const generateSellerToken= (seller)=>{
+    return jwt.sign({id: seller.id, email: seller.email,name: seller.name},secretKey,{expiresIn:"1d"})
+    }
+
 export default generateToken;

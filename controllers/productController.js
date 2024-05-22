@@ -2,6 +2,7 @@ import Product from "../Model/productModel.js";
 import Admin from "../Model/adminModel.js";
 import { cloudinaryInstance } from "../config/cloudinary.js";
 
+// Get all products
 export const getAllProducts = async (req, res) => {
   try {
 
@@ -12,10 +13,13 @@ export const getAllProducts = async (req, res) => {
   }
 };
 
+
+// Get product by slug
 const getProductBySlug = async (req, res, next) => {
   res.send("Not written");
 };
 
+//Add product
 export const addProduct = async (req, res) => {
   try {
     if (!req.file) {
@@ -47,7 +51,7 @@ export const addProduct = async (req, res) => {
       if (!findAdmin) {
         return res.send("please add admin first").status(201);
       }
-// Validate and parse JSON fields
+
 let parsedProductPictures = [];
 let parsedReviews = [];
 
@@ -97,6 +101,8 @@ try {
     res.status(400).send("Please check data");
   }
 };*/
+
+// Get single product
 export const getOneProductById= async (req, res) => {
   try{
     const product=await Product.findOne({productId:req.params.id}).exec()

@@ -10,6 +10,8 @@ import categoryRouter from "../routes/categoryRoutes.js";
 import reviewRouter from "../routes/reviewRoutes.js";
 import cartRouter from "../routes/cartRoutes.js";
 import orderRouter from "../routes/orderRoutes.js";
+import paymentRouter from "../routes/paymentRoutes.js";
+import sellerRouter from "../routes/sellerRoutes.js";
 const app = express();
 
 app.use(express.json());
@@ -22,15 +24,12 @@ app.use('/api/v1/categories',categoryRouter)
 app.use('/api/v1/review',reviewRouter)
 app.use('/api/v1/cart',cartRouter)
 app.use('/api/v1/order',orderRouter)
-
+app.use('/api/v1/payment',paymentRouter)
+app.use('/api/v1/seller',sellerRouter)
 
 
 const port = 3000;
 connectDb();
-
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

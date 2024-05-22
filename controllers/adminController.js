@@ -4,7 +4,10 @@ import { adminToken } from "../utils/generateToken.js";
 import User from "../Model/userModel.js";
 import Product from "../Model/productModel.js";
 import Order from "../Model/orderModel.js";
+import Payment from "../Model/paymentModel.js";
 
+
+// Admin signup
   export const singup = async (req, res) => {
     try {
       console.log(req.body);
@@ -38,19 +41,18 @@ import Order from "../Model/orderModel.js";
     }
   };
 
-
+// Admin signin
   export const singin = async (req, res) => {
     try {
       
       const { email, password } =req.body;
      
-  //console.log(req.body)
       const admin = await Admin.findOne({ email });
   
       if (!admin) {
         return res.send("Admin is not found");
       }
-  //console.log(admin.hashPassword)
+
   const saltRounds = 10;
       const hashPassword = await bcrypt.hash(password, saltRounds);
       const matchPassword = await bcrypt.compare(
@@ -74,13 +76,13 @@ import Order from "../Model/orderModel.js";
   };
 
 
-
+// Get all admins
   export const getAllAdmins = async (req, res) => {
     const admins = await Admin.find();
     return res.send(admins);
   };
 
-
+// Delete admin
   export const deleteAdmin = async (req, res) => {
     const id = req.params.id;
     console.log(id);
@@ -98,13 +100,13 @@ import Order from "../Model/orderModel.js";
   };
 
 
-  
+  // Get all users
   export const getAllUsers = async (req, res) => {
     const users = await User.find();
     return res.send(users);
   };
 
-
+// Get one user bu Id
   export const getOneUserById= async (req, res) => {
     try{
       const user=await User.findOne({userId:req.params.id}).exec()
@@ -119,7 +121,7 @@ import Order from "../Model/orderModel.js";
   }
 
 
-
+// Update user
   export const updateUser = async (req, res) => {
     const id = req.params.id;
     console.log(id);
@@ -137,7 +139,7 @@ import Order from "../Model/orderModel.js";
     return res.send(updatedUser);
   };
 
-
+// Delete user
   export const deleteUser = async (req, res) => {
     const id = req.params.id;
     console.log(id);
@@ -154,7 +156,7 @@ import Order from "../Model/orderModel.js";
     return res.send("deleted sucessfully");
   };
   
-
+// Update product
  export  const updateProduct = async (req, res, next) => {
     const id = req.params.id;
     console.log(id);
@@ -209,6 +211,44 @@ export const updateOrderStatus = async (req, res) => {
       await order.save();
   
       res.status(200).json(order);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Server error' });
+    }
+  };
+  
+//get all payments
+  export const getAllPayments = async (req, res) => {
+    try {
+      const payments = await Payment.find().populate('order', 'user_id total_price');
+  
+      res.status(200).json(payments);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Server error' });
+    }
+  };
+
+// update payment status
+  export const updatePaymentStatus = async (req, res) => {
+    try {
+      const {paymentId} = req.params;
+      const { payment_status } = req.body;
+  
+      const payment = await Payment.findById(paymentId);
+  
+      if (!payment) {
+        return res.status(404).json({ message: 'Payment not found' });
+      }
+  
+      if (!['pending', 'completed', 'failed'].includes(payment_status)) {
+        return res.status(400).json({ message: 'Invalid payment status' });
+      }
+  
+      payment.payment_status = payment_status;
+      await payment.save();
+  
+      res.status(200).json(payment);
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'Server error' });

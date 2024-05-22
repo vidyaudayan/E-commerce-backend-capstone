@@ -6,16 +6,11 @@ import User from "../Model/userModel.js";
 export const createReview = async (req, res) => {
   try {
     const { product_id, rating, comment,user_id } = req.body;
-    //const { product_id, rating, comment } = req.body;
-   //const user_id = req.user._id;
-
-    // Check if the product exists
+  
     const product = await Product.findById(product_id);
     if (!product) {
       return res.status(404).send('Product not found.');
     }
-
-    // Create a new review
     const newReview = new Review({
       product_id,
       user_id,
@@ -24,7 +19,7 @@ export const createReview = async (req, res) => {
     });
 
     const savedReview = await newReview.save();
-    // Update user's reviews array
+   
     await User.findByIdAndUpdate(user_id, { $push: { reviews: savedReview._id } });
 
     res.status(201).json(savedReview);

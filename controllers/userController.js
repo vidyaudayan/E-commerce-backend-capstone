@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import User from "../Model/userModel.js";
 import  generateToken  from "../utils/generateToken.js";
 
+// create new user
 export const signup=async(req,res)=>{
     try{
         console.log(req.body)
@@ -35,7 +36,7 @@ res.send("Signup successful")
    
 };
 
-
+// user signin
 export const signin= async(req,res)=>{
     try{
 const {email,password,firstName,lastName}=req.body
@@ -61,7 +62,7 @@ res.send("Logged in!");
 }
 
 
-
+// get user profile
 export const getProfile = async (req, res) => {
   try {
 
@@ -85,7 +86,7 @@ console.log(user)
 };
 
 
-
+//Get user reviews
 export const getUserReviews = async (req, res) => {
   try {
     const user = await User.findById(req.user._id).populate('reviews');
@@ -98,3 +99,18 @@ export const getUserReviews = async (req, res) => {
     res.status(500).send('Server error.');
   }
 };
+
+// user logout
+
+export const logout = (req, res) => {
+  try {
+   
+    res.clearCookie('token');
+    
+    res.status(200).json({ message: 'Logout successful' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+

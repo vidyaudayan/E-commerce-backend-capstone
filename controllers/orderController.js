@@ -1,12 +1,11 @@
 import Order from '../Model/orderModel.js';
 import Product from '../Model/productModel.js';
 
+// Create order
 export const createOrder = async (req, res) => {
   try {
     const { products, paymentId,user_id } = req.body;
-   // const userId = req.user._id;
-
-    // Calculate total price
+  
     let totalPrice = 0;
     for (const item of products) {
       const product = await Product.findById(item.product_id);

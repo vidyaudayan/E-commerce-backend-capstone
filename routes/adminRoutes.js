@@ -16,7 +16,8 @@ import {
 import { getAllUsers } from "../controllers/adminController.js";
 import authenticateAdmin from "../middlewares/adminMiddleware.js";
 import { createCategory, deleteCategory, updateCategory } from "../controllers/categoryController.js";
-
+import { getAllPayments, updatePaymentStatus } from "../controllers/adminController.js";
+import authenticateUser from "../middlewares/user-middleware.js";
 const adminRouter = express.Router();
 
 adminRouter.post("/signup", singup);
@@ -41,5 +42,8 @@ adminRouter.put("/update-category/:id",authenticateAdmin, updateCategory);
 adminRouter.delete("/delete-category/:id",authenticateAdmin, deleteCategory);
 
 adminRouter.put("/update-order/:orderId",authenticateAdmin, updateOrderStatus);
+
+adminRouter.get("/get-payments", authenticateUser, authenticateAdmin, getAllPayments);
+adminRouter.put('/update-paymentstatus/:paymentId', authenticateUser, authenticateAdmin, updatePaymentStatus);
 
 export default adminRouter;
