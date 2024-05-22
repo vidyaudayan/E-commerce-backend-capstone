@@ -30,7 +30,8 @@ const userSchema = new mongoose.Schema(
       required: true
     },
     
-   
+    resetToken: String,
+    resetTokenExpiration: Date,
     products: [{ type: mongoose.Types.ObjectId, ref: "Product" }],
     reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
   },
