@@ -22,6 +22,11 @@ const sellerSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+  
+    role: {
+      type: String,
+      enum: ["seller", "admin"],default:"seller"
+    },
     products: [
       {
         type: mongoose.Schema.Types.ObjectId,
