@@ -5,9 +5,9 @@ import authenticateAdmin from "../middlewares/adminMiddleware.js";
 const productRouter = express.Router();
 import cors from 'cors'
 const corsOptions = {
-    origin: 'http://localhost:5174', // Allow only your frontend's origin
-    credentials: true,               // Allow credentials (cookies, etc.)
-    optionsSuccessStatus: 200        // For legacy browser support
+    origin: 'http://localhost:5174', 
+    credentials: true,               
+    optionsSuccessStatus: 200        
   };
 
   productRouter.use(cors(corsOptions));
