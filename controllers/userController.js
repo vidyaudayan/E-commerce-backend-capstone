@@ -2,30 +2,32 @@ import bcrypt from "bcrypt";
 import User from "../Model/userModel.js";
 import  generateToken  from "../utils/generateToken.js";
 import crypto from 'crypto'
+
 // create new user
+ 
 export const signup=async(req,res)=>{
     try{
         console.log(req.body)
         const {firstName,lastName,password,email,phoneNumber}=req.body;
-        const userExist= await User.find({email});
-        if(!userExist){
-          return  res.send("user already exists")
+        const userExist= await User.findOne({email});
+        if(userExist){
+          return  res.status(409).send("user already exists")
         }
     
         const saltRounds= 10;
         const hashPassword= await bcrypt.hash(password,saltRounds)
-  const newUser= new User({email,firstName,lastName,hashPassword,phoneNumber})
+  const newUser= new User({email,firstName,lastName,hashPassword,phoneNumber,role:"user"})
   
   const newUserCreated= await newUser.save();
   console.log(newUserCreated)
    
   if(!newUserCreated){
-    return res.send("User not created")
+    return res.status(500).send("User not created")
 }
 
  
   const token= generateToken(newUserCreated);
-  res.cookie("token",token)
+  res.cookie("token",token, {httpOnly:true,secure:false})
 
 res.send("Signup successful")
 
@@ -51,8 +53,13 @@ if(!matchPassword){
 }
 
 const token= generateToken(user)
-res.cookie("token", token);
-res.send("Logged in!");
+res.cookie("token", token,{httpOnly:true,secure:false});
+res.status(200).json({
+  message : "Login successfully",
+  data : token,
+  success : true,
+  error : false
+})
 
 
     }catch(error){
@@ -77,6 +84,7 @@ console.log(user)
       firstName: user.firstName,
       lastName:user.lastName,
       email: user.email,
+      role:user.role
      
     });
   } catch (error) {
@@ -107,10 +115,14 @@ export const logout = (req, res) => {
    
     res.clearCookie('token');
     
-    res.status(200).json({ message: 'Logout successful' });
+    res.status(200).json({ message: 'Logout successful',error : false,
+    success : true,
+    data : []
+    });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Server error'||error,  error : true,
+    success : false, });
   }
 };
 

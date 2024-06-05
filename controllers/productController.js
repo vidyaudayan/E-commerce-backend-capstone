@@ -40,9 +40,9 @@ export const addProduct = async (req, res) => {
 
       const imageUrl = result.url;
 
-      const body = req.body;
+      const body =JSON.parse(req.body.productDetails)
 
-      console.log(body, "body");
+      console.log("body", body);
 
       const { title, description,slug, price,adminEmail,category, productPictures, reviews } = body;
 
@@ -66,7 +66,7 @@ try {
   return res.status(400).json({ success: false, message: "Invalid JSON format" });
 }
 
-      const createProduct = new Product({
+      const createProduct = new Product({ 
         title,
         description,
         price,
@@ -75,7 +75,7 @@ try {
         image: imageUrl,
         productPictures: parsedProductPictures,
         reviews: parsedReviews,
-        category
+        category 
       });
 
       const newProductCreated = await createProduct.save();
@@ -83,13 +83,17 @@ try {
       if (!newProductCreated) {
         return res.send("product is not created");
       }
-      return res.send(newProductCreated);
+      return res.status(201).send(newProductCreated).json({
+        success: true,
+        message: "Product created successfully",
+      });
     });
   } catch (error) {
     console.log("something went wrong", error);
-    res.send("failed to create product").status(201);
+    res.status(500).send("failed to create product")
   }
 };
+
 
 /*export const addProduct = async (req, res) => {
   try {

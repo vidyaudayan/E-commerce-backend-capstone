@@ -15,7 +15,7 @@ import sellerRouter from "../routes/sellerRoutes.js";
 const app = express();
 
 app.use(express.json());
-app.use(cors())
+
 app.use(cookieParser())
 app.use('/api/v1/user',userRouter)
 app.use('/api/v1/products',productRouter)
@@ -26,8 +26,21 @@ app.use('/api/v1/cart',cartRouter)
 app.use('/api/v1/order',orderRouter)
 app.use('/api/v1/payment',paymentRouter)
 app.use('/api/v1/seller',sellerRouter)
+const corsOptions = {
+  origin: 'http://localhost:5173', // Replace with your frontend's URL
+  credentials: true, 
+  optionsSuccessStatus: 200               // Allow credentials (cookies, etc.)
+};
+
+app.use(cors(corsOptions));
+
+app.options('*', cors(corsOptions));
 
 
+app.use(cors({
+  origin:'http://localhost:5173',
+  credentials:true
+})) 
 const port = 3000;
 connectDb();
 

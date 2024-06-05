@@ -11,7 +11,8 @@ import {
   getOneUserById, updateUser,
   deleteUser, updateProduct,
   deleteProduct,
-  updateOrderStatus
+  updateOrderStatus,
+  getAdminProfile
 } from "../controllers/adminController.js";
 import { getAllUsers } from "../controllers/adminController.js";
 import authenticateAdmin from "../middlewares/adminMiddleware.js";
@@ -19,20 +20,30 @@ import { createCategory, deleteCategory, updateCategory } from "../controllers/c
 import { getAllPayments, updatePaymentStatus } from "../controllers/adminController.js";
 import authenticateUser from "../middlewares/user-middleware.js";
 const adminRouter = express.Router();
+import cors from 'cors'
+const corsOptions = {
+    origin: 'http://localhost:5174', // Allow only your frontend's origin
+    credentials: true,               // Allow credentials (cookies, etc.)
+    optionsSuccessStatus: 200        // For legacy browser support
+  };
+
+  adminRouter.use(cors(corsOptions));
+adminRouter.use(express.json());
 
 adminRouter.post("/signup", singup);
 adminRouter.post("/signin", singin);
+adminRouter.get("/adminprofile",authenticateAdmin, getAdminProfile )
 adminRouter.get("/get-admins",authenticateAdmin, getAllAdmins);
 adminRouter.delete("/delete-admins/:id", deleteAdmin);
 
-adminRouter.get("/get-users",authenticateAdmin, getAllUsers);
+adminRouter.get("/get-users", getAllUsers);
 adminRouter.get("/get-user/:userId",authenticateAdmin, getOneUserById);
 adminRouter.put("/update-users/:id",authenticateAdmin, updateUser);
 adminRouter.delete("/delete-user/:id",authenticateAdmin, deleteUser);
 
 
 adminRouter.get("/get-products", getAllProducts);
-adminRouter.post("/add-products",authenticateAdmin, upload.single("image"), addProduct);
+adminRouter.post("/add-products",authenticateAdmin, upload.single('productImage'), addProduct);
 adminRouter.put("/update-product/:id",authenticateAdmin, updateProduct);
 adminRouter.delete("/delete-product/:id",authenticateAdmin, deleteProduct);
 

@@ -27,9 +27,11 @@ const userSchema = new mongoose.Schema(
     },
     phoneNumber: {
       type: Number,
-      required: true
+     
     },
-    
+    role: {
+      type: String,
+    },
     resetToken: String,
     resetTokenExpiration: Date,
     products: [{ type: mongoose.Types.ObjectId, ref: "Product" }],

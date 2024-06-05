@@ -35,7 +35,7 @@ import Payment from "../Model/paymentModel.js";
   
       const token = adminToken(newAdminrCreated);
       res.cookie("token", token);
-      res.json({ message: "signed in!", token });
+      res.json({ message: "Admin signed in!", token });
     } catch (error) {
       console.log(error, "Something wrong");
     }
@@ -66,14 +66,43 @@ import Payment from "../Model/paymentModel.js";
       }
   
       const token = adminToken(admin);
-  
-      res.cookie("token", token);
-      res.json({ message: "Logged in!", token });
+      res.cookie("token", token,{httpOnly:true,secure:false});
+      res.status(200).json({
+        message : "Login successfully",
+        data : token,
+        success : true,
+        error : false
+      })
     } catch (error) {
       console.error("Error", error);
       res.status(500).send("Internal Server Error");
     }
   };
+
+// admin profile
+
+export const getAdminProfile = async (req, res) => {
+  try {
+
+   const admin = await Admin.findById(req.id).select('-password'); 
+console.log(admin)
+if (!admin) {
+return res.status(404).send('admin not found');
+}
+   
+    res.status(200).json({
+      id: admin._id,
+      name: admin.name,
+      email: admin.email,
+      role:admin.role
+     
+    })
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server error');
+  }
+}
+
 
 
 // Get all admins
@@ -103,10 +132,10 @@ import Payment from "../Model/paymentModel.js";
   // Get all users
   export const getAllUsers = async (req, res) => {
     const users = await User.find();
-    return res.send(users);
+    return res.json(users)
   };
 
-// Get one user bu Id
+// Get one user by Id
   export const getOneUserById= async (req, res) => {
     try{
       const user=await User.findOne({userId:req.params.id}).exec()
@@ -158,13 +187,13 @@ import Payment from "../Model/paymentModel.js";
   
 // Update product
  export  const updateProduct = async (req, res, next) => {
-    const id = req.params.id;
-    console.log(id);
+    const _id = req.params.id;
+    console.log(_id);
   
     const { title,image,description,price,slug,category,productPictures,reviews} = req.body;
-  
-    const updatedProduct = await Product.findOneAndUpdate(
-      { _id: id },
+  try{
+    const updatedProduct = await Product.findByIdAndUpdate(
+      _id,
       { title,image,description,price,slug,category,productPictures,reviews},
       {
         new: true,
@@ -172,13 +201,22 @@ import Payment from "../Model/paymentModel.js";
     );
   
     if (!updatedProduct) {
-      return res.send("Product is not updated");
+      return res.status(404).send("Product is not updated");
     }
   
     console.log(updatedProduct);
     return res.send(updatedProduct);
-  };
 
+
+  }catch(error){
+    console.error(error);
+    return res.status(500).send("Internal server error");
+  }
+
+  }
+   
+
+  // delete product
   export const deleteProduct = async (req, res) => {
     const id = req.params.id;
   
