@@ -15,27 +15,25 @@ const productSchema = new mongoose.Schema(
 
       minLength: 6,
     },
-    selllingPrice: {
+    sellingPrice: {
       type: Number,
      
     },
     price: {
       type: Number,
-     
+       
       
     },
     slug:{
-        type:String,
+        type:String, 
        
     },
-    description:{
+    description:{  
       type:String,
       
       
   },
-    productPictures: [
-        { img: { type: String } }
-    ],
+    productPictures: [ ],
     reviews: [
         {
             userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},

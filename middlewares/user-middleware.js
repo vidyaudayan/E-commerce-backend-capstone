@@ -18,7 +18,7 @@ dotenv.config();
   });
 }*/
 
-const authenticateUser = (req, res, next) => {
+/*const authenticateUser = (req, res, next) => {
     const token = req.cookies.token ;
   
     if (!token) {
@@ -30,10 +30,37 @@ const authenticateUser = (req, res, next) => {
         return res.status(403).send('Invalid token.');
       }
   
-      req.user = decoded; // Attach decoded token to request object
+      req.user =decoded; // Attach decoded token to request object
       console.log(req.user)
       next();
     });
   };
+*/
 
-export default authenticateUser;;
+const authenticateUser = (req, res, next) => {
+  // Assuming you have some logic to verify the token and get user data
+  const token = req.cookies.token ;
+  if (!token) {
+      return res.status(401).json({
+        message:"Please login..",
+        
+      });
+  }
+
+  try {
+      const decoded = jwt.verify(token, process.env.SE);
+      req.user = decoded; // Attach user data to the request object
+      next();
+  } catch (err) {
+      return res.status(401).send('Unauthorized');
+  }
+};
+
+// Example token verification function (replace with your logic)
+const verifyToken = (token) => {
+  // Logic to verify token and return user data
+  // For example:
+  return jwt.verify(token, process.env.SE);
+};
+
+export default authenticateUser 

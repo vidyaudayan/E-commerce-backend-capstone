@@ -50,7 +50,7 @@ import Payment from "../Model/paymentModel.js";
       const admin = await Admin.findOne({ email });
   
       if (!admin) {
-        return res.send("Admin is not found");
+        return res.status(404).send("Admin is not found");
       }
 
   const saltRounds = 10;
@@ -190,11 +190,11 @@ return res.status(404).send('admin not found');
     const _id = req.params.id;
     console.log(_id);
   
-    const { title,image,description,price,slug,category,productPictures,reviews} = req.body;
+    const { title,image,description,price,sellingPrice,slug,category,productPictures,reviews} = req.body;
   try{
     const updatedProduct = await Product.findByIdAndUpdate(
       _id,
-      { title,image,description,price,slug,category,productPictures,reviews},
+      { title,image,description,price,sellingPrice,slug,category,productPictures,reviews},
       {
         new: true,
       }
@@ -203,11 +203,11 @@ return res.status(404).send('admin not found');
     if (!updatedProduct) {
       return res.status(404).send("Product is not updated");
     }
-  
+      
     console.log(updatedProduct);
     return res.send(updatedProduct);
 
-
+  
   }catch(error){
     console.error(error);
     return res.status(500).send("Internal server error");

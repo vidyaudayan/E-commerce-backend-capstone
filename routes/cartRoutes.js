@@ -2,11 +2,28 @@ import express from "express";
 import  {addToCart,getCart,updateCart, deleteFromCart} from '../controllers/cartController.js';
 import authenticateUser from "../middlewares/user-middleware.js";
 const cartRouter = express.Router();
-cartRouter.use("/cart",cartRouter)
+import cors from 'cors'
+const allowedOrigins = ['http://localhost:5174', 'http://localhost:5173'];
 
-cartRouter.post("/add",authenticateUser, addToCart);
+  const corsOptions = {
+    origin: (origin, callback) => {
+      if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    credentials: true,   
+    optionsSuccessStatus: 200      
+  };    
+
+  cartRouter.use(cors(corsOptions));
+
+  cartRouter.use("/cart",cartRouter)
+
+cartRouter.post("/addtocart",authenticateUser, addToCart);
 cartRouter.get('/', authenticateUser, getCart);
 cartRouter.put('/update', authenticateUser, updateCart);
 cartRouter.delete('/delete/:productId', authenticateUser, deleteFromCart);
 
-export default cartRouter;
+export default cartRouter;  

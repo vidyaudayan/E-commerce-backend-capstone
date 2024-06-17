@@ -41,9 +41,9 @@ adminRouter.get("/get-user/:userId",authenticateAdmin, getOneUserById);
 adminRouter.put("/update-users/:id",authenticateAdmin, updateUser);
 adminRouter.delete("/delete-user/:id",authenticateAdmin, deleteUser);
 
-
+ 
 adminRouter.get("/get-products", getAllProducts);
-adminRouter.post("/add-products",authenticateAdmin, upload.single('productImage'), addProduct);
+adminRouter.post("/add-products",authenticateAdmin, upload.array('productPictures'), addProduct);
 adminRouter.put("/update-product/:id",authenticateAdmin, updateProduct);
 adminRouter.delete("/delete-product/:id",authenticateAdmin, deleteProduct);
 
@@ -57,4 +57,4 @@ adminRouter.put("/update-order/:orderId",authenticateAdmin, updateOrderStatus);
 adminRouter.get("/get-payments", authenticateUser, authenticateAdmin, getAllPayments);
 adminRouter.put('/update-paymentstatus/:paymentId', authenticateUser, authenticateAdmin, updatePaymentStatus);
 
-export default adminRouter;
+export default adminRouter;  

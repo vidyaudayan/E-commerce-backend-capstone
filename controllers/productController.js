@@ -20,7 +20,7 @@ const getProductBySlug = async (req, res, next) => {
 };
 
 //Add product
-export const addProduct = async (req, res) => {
+{/*export const addProduct = async (req, res) => {
   try {
     if (!req.file) {
       return res
@@ -52,7 +52,7 @@ export const addProduct = async (req, res) => {
         return res.send("please add admin first").status(201);
       }
 
-let parsedProductPictures = [];
+let parsedProductPictures = [];  
 let parsedReviews = [];
 
 try {
@@ -92,7 +92,7 @@ try {
     console.log("something went wrong", error);
     res.status(500).send("failed to create product")
   }
-};
+}
 
 
 /*export const addProduct = async (req, res) => {
@@ -104,19 +104,78 @@ try {
     console.log(error);
     res.status(400).send("Please check data");
   }
-};*/
+};
+*/}
+ 
+
+
+export const addProduct = async (req, res) => {
+  try {
+      const { productDetails } = req.body;
+      const body = JSON.parse(productDetails);
+console.log(body)
+      const imageUrls = [];
+
+      // Upload each image to Cloudinary and collect URLs
+      for (const file of req.files) {
+          const result = await cloudinaryInstance.uploader.upload(file.path);
+          imageUrls.push(result.url);
+      }
+console.log(imageUrls)
+      const { title,category, description, slug, price, sellingPrice} = body;
+console.log("body2", body)
+    /* const findAdmin = await Admin.findOne({ email: adminEmail });
+
+      if (!findAdmin) {
+          return res.status(404).send("Admin not found");
+      }*/
+
+      const createProduct = new Product({
+          title,   
+          category,
+          description,   
+          price,   
+          slug,
+         sellingPrice,
+          image: imageUrls[0], // Assuming the first image is the main image
+          productPictures:imageUrls,
+        
+      });
+
+      const newProductCreated = await createProduct.save();
+
+      if (!newProductCreated) {
+          return res.status(400).send("Product creation failed");
+      }
+
+      return res.status(201).json({
+          success: true,
+          message: "Product created successfully",
+          product: newProductCreated,
+      });
+  } catch (error) {
+      console.log("Error creating product:", error);
+      res.status(500).send("Failed to create product");
+  }
+};
 
 // Get single product
 export const getOneProductById= async (req, res) => {
   try{
-    const product=await Product.findOne({productId:req.params.id}).exec()
-    if(!product){
+    const { productId } = req.params;
+    //const  {id}  = req.params
+    console.log("req.param", req.params)
+    //console.log("Requested product ID:", id)
+   const product = await Product.findById(productId).exec();
+    
+   if(!product){
      res.status(404).json({error:'product not found'})
     }
-    res.status(200).json(product)
+    res.json(product)
     }catch(error){
      console.log(error)
      res.status(500).json({error:'internal error'})
     }
-}
-
+}  
+            
+         

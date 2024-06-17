@@ -1,6 +1,7 @@
 
 import Category from '../Model/categoryModel.js';
-
+import Product from '../Model/productModel.js';
+import mongoose from 'mongoose';
 // Create a new category
 export const createCategory = async (req, res) => {
   try {
@@ -31,6 +32,70 @@ export const getCategories = async (req, res) => {
     res.status(500).send('Server error.');
   }
 };
+
+
+// Get products categorywise
+
+export const getCategoryWiseProduct = async(req,res)=>{
+  try{
+    const productCategory = await Product.distinct("category")
+         
+        console.log("category", productCategory)
+
+        //array to store one product from each category
+        const productByCategory = []
+
+        for(const category of productCategory){
+            const product = await Product.findOne({category:category })
+
+            if(product){
+                productByCategory.push(product)
+            }
+        }  
+        res.json({
+            message : "category product",
+            data : productByCategory,
+            success : true,
+            error : false
+        })
+     
+  }catch(error) {
+    console.error(error);
+    res.status(500).send('Server error.');
+  }
+}
+
+
+export const getCategoryWiseAllProducts = async(req,res)=>{
+  try{
+  
+    const { category } = req.body;
+
+    // Convert category to ObjectId if it's a valid hex string
+    if (mongoose.Types.ObjectId.isValid(category)) {
+      const categoryId = new mongoose.Types.ObjectId(category);
+      const products = await Product.find({ category: categoryId });
+      res.json({
+        message: "products",
+        data: products,
+        success: true,
+        error: false
+      });
+    } else {
+      res.status(400).json({
+        message: "Invalid category ID",
+        success: false,
+        error: true
+      });
+    }
+     
+  }catch(error) {
+    console.error(error);
+    res.status(500).send('Server error.');
+  }
+}
+
+
 
 // Get category by ID
 export const getCategoryById = async (req, res) => {
