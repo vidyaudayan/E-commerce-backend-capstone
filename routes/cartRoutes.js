@@ -3,6 +3,7 @@ import  {addToCart,getCart,updateCart, deleteFromCart} from '../controllers/cart
 import authenticateUser from "../middlewares/user-middleware.js";
 const cartRouter = express.Router();
 import cors from 'cors'
+cartRouter.use("/cart",cartRouter)
 //const allowedOrigins = [process.env.FRONT_END_URL2, process.env.FRONT_END_URL1];
 
   /*const corsOptions = {
@@ -18,13 +19,22 @@ import cors from 'cors'
   };    
 
   cartRouter.use(cors(corsOptions));*/
-  cartRouter.use(cors({
+  /*cartRouter.use(cors({
     origin: 'https://imaginative-genie-54ec39.netlify.app' ,
     credentials: true,    
-}))
+}))*/
+
+const corsOptions = {
+  origin:  'https://imaginative-genie-54ec39.netlify.app' ,
+  credentials: true, // Allow cookies for cross-origin requests
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed methods for CORS requests
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'], // Allowed headers
+  // ... other options if needed
+};
+
+cartRouter.use(cors(corsOptions));
 
 
-  cartRouter.use("/cart",cartRouter)
 
 cartRouter.post("/addtocart",authenticateUser, addToCart);
 cartRouter.get('/', authenticateUser, getCart);
