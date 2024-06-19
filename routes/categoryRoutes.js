@@ -9,7 +9,7 @@ import cors from 'cors'
     origin: 'http://localhost:5173',
     credentials: true,               
     optionsSuccessStatus: 200      
-  };*/
+  };
    
   const allowedOrigins = [process.env.FRONT_END_URL2, process.env.FRONT_END_URL1];
 
@@ -25,7 +25,12 @@ import cors from 'cors'
     optionsSuccessStatus: 200    
   }; 
 
-  categoryRouter.use(cors(corsOptions));
+  categoryRouter.use(cors(corsOptions));*/
+
+  categoryRouter.use(cors({
+    origin: 'https://imaginative-genie-54ec39.netlify.app' ,
+    credentials: true,    
+}))
 
 categoryRouter.use("/categories",categoryRouter)
 

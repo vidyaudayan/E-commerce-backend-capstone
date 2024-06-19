@@ -21,13 +21,18 @@ import { getAllPayments, updatePaymentStatus } from "../controllers/adminControl
 import authenticateUser from "../middlewares/user-middleware.js";
 const adminRouter = express.Router();
 import cors from 'cors'
-const corsOptions = {
+/*const corsOptions = {
     origin: process.env.FRONT_END_URL2, 
     credentials: true,              
     optionsSuccessStatus: 200        
   };
 
-  adminRouter.use(cors(corsOptions));
+  adminRouter.use(cors(corsOptions));*/
+  adminRouter.use(cors({
+    origin: 'https://imaginative-genie-54ec39.netlify.app' ,
+    credentials: true,    
+}))
+
 adminRouter.use(express.json());
 
 adminRouter.post("/signup", singup);

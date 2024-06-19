@@ -3,9 +3,9 @@ import  {addToCart,getCart,updateCart, deleteFromCart} from '../controllers/cart
 import authenticateUser from "../middlewares/user-middleware.js";
 const cartRouter = express.Router();
 import cors from 'cors'
-const allowedOrigins = [process.env.FRONT_END_URL2, process.env.FRONT_END_URL1];
+//const allowedOrigins = [process.env.FRONT_END_URL2, process.env.FRONT_END_URL1];
 
-  const corsOptions = {
+  /*const corsOptions = {
     origin: (origin, callback) => {
       if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
         callback(null, true);
@@ -17,7 +17,12 @@ const allowedOrigins = [process.env.FRONT_END_URL2, process.env.FRONT_END_URL1];
     optionsSuccessStatus: 200      
   };    
 
-  cartRouter.use(cors(corsOptions));
+  cartRouter.use(cors(corsOptions));*/
+  cartRouter.use(cors({
+    origin: 'https://imaginative-genie-54ec39.netlify.app' ,
+    credentials: true,    
+}))
+
 
   cartRouter.use("/cart",cartRouter)
 

@@ -16,6 +16,10 @@ const app = express();
 
 app.use(express.json());
 
+app.use(cors({
+    origin: 'https://imaginative-genie-54ec39.netlify.app' ,
+    credentials: true,    
+}))
 app.use(cookieParser())
 app.use('/api/v1/user',userRouter)
 app.use('/api/v1/products',productRouter)

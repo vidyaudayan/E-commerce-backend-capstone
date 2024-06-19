@@ -3,13 +3,11 @@ import  {signup,signin, getProfile,getUserReviews,logout, forgotPassword, resetP
 import authenticateUser from "../middlewares/user-middleware.js";
 const userRouter = express.Router();
 import cors from 'cors'
-const corsOptions = {
-    origin: process.env.FRONT_END_URL1, 
-    credentials: true,               
-    optionsSuccessStatus: 200       
-  };
-
-  userRouter.use(cors(corsOptions));
+import cors from 'cors'
+userRouter.use(cors({
+    origin: 'https://imaginative-genie-54ec39.netlify.app' ,
+    credentials: true,    
+}))
 userRouter.use(express.json());
 
 

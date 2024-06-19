@@ -3,6 +3,12 @@ import  {createReview, getProductReviews, getReviewById,updateReview,deleteRevie
 import authenticateUser from "../middlewares/user-middleware.js";
 const reviewRouter = express.Router();
 
+import cors from 'cors'
+reviewRouter.use(cors({
+    origin: 'https://imaginative-genie-54ec39.netlify.app' ,
+    credentials: true,    
+}))
+
 reviewRouter.use("/review",reviewRouter)
 reviewRouter.post("/add-review",authenticateUser, createReview);
 reviewRouter.get("/product/:product_id", getProductReviews);

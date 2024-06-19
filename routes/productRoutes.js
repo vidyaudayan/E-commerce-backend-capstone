@@ -4,22 +4,14 @@ import upload from "../middlewares/uploadMiddleware.js";
 import authenticateAdmin from "../middlewares/adminMiddleware.js";
 const productRouter = express.Router();
 import cors from 'cors'
-const allowedOrigins = [process.env.FRONT_END_URL2, process.env.FRONT_END_URL1];
 
-  const corsOptions = {
-    origin: (origin, callback) => {
-      if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
-    credentials: true,   
-    optionsSuccessStatus: 200    
-  }; 
-    
 
-  productRouter.use(cors(corsOptions));
+productRouter.use(cors({
+    origin: 'https://imaginative-genie-54ec39.netlify.app' ,
+    credentials: true,    
+}))   
+
+  
 
 productRouter.use("/products",productRouter)
   
