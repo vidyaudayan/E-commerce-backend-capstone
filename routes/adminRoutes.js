@@ -22,9 +22,9 @@ import authenticateUser from "../middlewares/user-middleware.js";
 const adminRouter = express.Router();
 import cors from 'cors'
 const corsOptions = {
-    origin: 'http://localhost:5174', // Allow only your frontend's origin
-    credentials: true,               // Allow credentials (cookies, etc.)
-    optionsSuccessStatus: 200        // For legacy browser support
+    origin: process.env.FRONT_END_URL2, 
+    credentials: true,              
+    optionsSuccessStatus: 200        
   };
 
   adminRouter.use(cors(corsOptions));

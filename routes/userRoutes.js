@@ -4,7 +4,7 @@ import authenticateUser from "../middlewares/user-middleware.js";
 const userRouter = express.Router();
 import cors from 'cors'
 const corsOptions = {
-    origin: 'http://localhost:5173', 
+    origin: process.env.FRONT_END_URL1, 
     credentials: true,               
     optionsSuccessStatus: 200       
   };

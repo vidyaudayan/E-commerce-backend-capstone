@@ -11,7 +11,7 @@ import cors from 'cors'
     optionsSuccessStatus: 200      
   };*/
    
-  const allowedOrigins = ['http://localhost:5174', 'http://localhost:5173'];
+  const allowedOrigins = [process.env.FRONT_END_URL2, process.env.FRONT_END_URL1];
 
   const corsOptions = {
     origin: (origin, callback) => {

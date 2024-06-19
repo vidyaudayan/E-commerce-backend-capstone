@@ -27,7 +27,7 @@ app.use('/api/v1/order',orderRouter)
 app.use('/api/v1/payment',paymentRouter)
 app.use('/api/v1/seller',sellerRouter)
 const corsOptions = {
-  origin: 'http://localhost:5173', // Replace with your frontend's URL
+  origin: process.env.FRONT_END_URL1, // Replace with your frontend's URL
   credentials: true, 
   optionsSuccessStatus: 200               // Allow credentials (cookies, etc.)
 };
@@ -38,7 +38,7 @@ app.options('*', cors(corsOptions));
 
 
 app.use(cors({
-  origin:'http://localhost:5173',
+  origin:process.env.FRONT_END_URL1,
   credentials:true
 })) 
 const port = process.env.PORT;

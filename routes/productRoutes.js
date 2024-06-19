@@ -4,7 +4,7 @@ import upload from "../middlewares/uploadMiddleware.js";
 import authenticateAdmin from "../middlewares/adminMiddleware.js";
 const productRouter = express.Router();
 import cors from 'cors'
-const allowedOrigins = ['http://localhost:5174', 'http://localhost:5173'];
+const allowedOrigins = [process.env.FRONT_END_URL2, process.env.FRONT_END_URL1];
 
   const corsOptions = {
     origin: (origin, callback) => {
