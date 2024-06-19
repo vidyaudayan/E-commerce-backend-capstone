@@ -178,4 +178,15 @@ export const getOneProductById= async (req, res) => {
     }
 }  
             
-         
+   // Search products
+  export const searchProducts= async(req,res)=>{
+    try{
+
+//const query= req.query.q
+//console.log("query",query)
+
+    }catch(error){
+      console.log(error)
+      res.status(500).json({error:'internal error'})
+    }
+   }    
