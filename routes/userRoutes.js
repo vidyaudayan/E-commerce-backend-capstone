@@ -23,7 +23,7 @@ userRouter.use(cors(corsOptions));
 userRouter.use("/user",userRouter)
 
 userRouter.post("/signup", signup);
-userRouter.post("/signin",authenticateUser, signin);
+userRouter.post("/signin", signin);
 userRouter.get("/profile",authenticateUser, getProfile);
 userRouter.get('/reviews/:id', authenticateUser, getUserReviews);
 userRouter.post("/logout",logout);
