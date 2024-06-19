@@ -41,9 +41,9 @@ app.use(cors({
   origin:'http://localhost:5173',
   credentials:true
 })) 
-const port = 3000;
+const port = process.env.PORT;
 connectDb();
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(` Listening on port ${port}`);
 });

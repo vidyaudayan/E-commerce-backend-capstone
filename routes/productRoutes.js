@@ -26,7 +26,7 @@ productRouter.use("/products",productRouter)
 
 productRouter.get("/", getAllProducts);
 productRouter.get("/:productId", getOneProductById);
-productRouter.get("/search",searchProducts)
+//productRouter.get("/search",searchProducts)
 //productRouter.post("/addproduct",authenticateAdmin, upload.single("productImage"), addProduct);
 
 export default productRouter;   
