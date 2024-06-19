@@ -30,21 +30,12 @@ app.use('/api/v1/cart',cartRouter)
 app.use('/api/v1/order',orderRouter)
 app.use('/api/v1/payment',paymentRouter)
 app.use('/api/v1/seller',sellerRouter)
-const corsOptions = {
-  origin: process.env.FRONT_END_URL1, // Replace with your frontend's URL
-  credentials: true, 
-  optionsSuccessStatus: 200               // Allow credentials (cookies, etc.)
-};
-
-app.use(cors(corsOptions));
-
-app.options('*', cors(corsOptions));
 
 
-app.use(cors({
-  origin:process.env.FRONT_END_URL1,
-  credentials:true
-})) 
+
+
+
+ 
 const port = process.env.PORT;
 connectDb();
 
