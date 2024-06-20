@@ -21,6 +21,7 @@ app.use(cors({
     credentials: true,    
 }))
 app.use(cookieParser())
+app.use(session);
 app.use('/api/v1/user',userRouter)
 app.use('/api/v1/products',productRouter)
 app.use('/api/v1/admin',adminRouter)
