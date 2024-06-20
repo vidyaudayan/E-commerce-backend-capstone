@@ -4,10 +4,11 @@ import dotenv from "dotenv";
 dotenv.config();
 
 
-/* const authenticateUser = (req, res, next) => {
+ const authenticateUser = (req, res, next) => {
   // Assuming you have some logic to verify the token and get user data
   const token = req.cookies.token ;
   console.log("token middle", token)
+  
   if (!token) {
       return res.status(401).json({
         message:"Please login..",
@@ -43,12 +44,12 @@ dotenv.config();
   // Logic to verify token and return user data
   // For example:
   //return jwt.verify(token, process.env.SE);
-//;*/
+//;
 
 
 
 
-function authenticateUser(req, res, next) {
+/*function authenticateUser(req, res, next) {
   const token = req.cookies.token; // Assuming cookie name
 
   try {
@@ -64,7 +65,7 @@ function authenticateUser(req, res, next) {
     // Handle JWT verification errors
     return res.status(401).json({ message: 'Unauthorized' });
   }
-}
+}*/
 
 
 

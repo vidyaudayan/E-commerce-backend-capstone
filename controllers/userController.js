@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import User from "../Model/userModel.js";
-import  generateToken  from "../utils/generateToken.js";
+import  generateToken, { adminToken }  from "../utils/generateToken.js";
 import crypto from 'crypto'
 
 // create new user
@@ -26,7 +26,7 @@ export const signup=async(req,res)=>{
 }
 
  
-  const token= generateToken(newUserCreated);
+  const token= adminToken(newUserCreated);
   res.cookie("token",token, {secure:false})
 
 res.send("Signup successful")
@@ -52,7 +52,7 @@ if(!matchPassword){
     return res.send("password incorrect")
 }
 
-const token= generateToken(user)
+const token= adminToken(user)
 res.cookie("token", token,{secure:false});
 res.status(200).json({
   message : "Login successfully",
