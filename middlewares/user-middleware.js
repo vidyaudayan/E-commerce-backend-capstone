@@ -3,41 +3,8 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-/*function authenticateUser(req, res, next) {
-  const token = req.cookies.token;
 
-  jwt.verify(token, process.env.SE, (err, user) => {
-    console.log(err);
-
-    if (err) return res.sendStatus(403);
-
-    req.user = user;
-    console.log(req.user.role);
-
-    next();
-  });
-}*/
-
-/*const authenticateUser = (req, res, next) => {
-    const token = req.cookies.token ;
-    console.log("token middle", token)
-    if (!token) {
-      return res.status(401).send('Access denied. No token provided.');
-    }
-  
-    jwt.verify(token, process.env.SE, (err, decoded) => {
-      if (err) {
-        return res.status(403).send('Invalid token.');
-      }
-  
-      req.user =decoded; // Attach decoded token to request object
-      console.log(req.user)
-      next();
-    });
-  };*/
-
-
- const authenticateUser = (req, res, next) => {
+/* const authenticateUser = (req, res, next) => {
   // Assuming you have some logic to verify the token and get user data
   const token = req.cookies.token ;
   console.log("token middle", token)
@@ -76,6 +43,30 @@ dotenv.config();
   // Logic to verify token and return user data
   // For example:
   //return jwt.verify(token, process.env.SE);
-//};
+//;*/
+
+
+
+
+function authenticateUser(req, res, next) {
+  const token = req.cookies.token; // Assuming cookie name
+
+  try {
+    const decoded = jwt.verify(token, process.env.SE);
+    // Check if role claim exists and is authorized for the route
+    if (decoded.role && ) {
+      req.user = decoded; // Store decoded user data for further use
+      next(); // Allow access to the route
+    } else {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+  } catch (error) {
+    // Handle JWT verification errors
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+}
+
+
+
 
 export default authenticateUser 

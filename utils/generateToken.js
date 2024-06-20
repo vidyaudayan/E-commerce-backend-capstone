@@ -5,7 +5,7 @@ dotenv.config();
 const secretKey= process.env.SE;
 
 export const generateToken= (user)=>{
-return jwt.sign({id: user.id, email: user.email, firstName: user.firstName, lastName: user.lastName},secretKey,{expiresIn:"1d"})
+return jwt.sign({id: user.id, email: user.email,role: user.role,firstName: user.firstName, lastName: user.lastName},secretKey,{expiresIn:"1d"})
 }
 export const adminToken = (user) => {
     return jwt.sign({ id: user.id, role: user.role }, secretKey, {
