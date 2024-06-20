@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-import expressSession from 'express-session'
+
 // create new user
  
 export const signup=async(req,res)=>{
@@ -220,12 +220,7 @@ export const resetPassword = async (req, res) => {
 
 // ... other imports
 
-const session = expressSession({
-  secret: process.env.SE, // Replace with a strong secret key
-  resave: false,
-  saveUninitialized: false,
-  cookie: { secure: false } // Set to true in production
-});
+
 
 export const signin = async (req, res) => {
   try {

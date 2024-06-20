@@ -1,5 +1,15 @@
 
 import express from "express";
+import expressSession from 'express-session'
+
+const session = expressSession({
+  secret: process.env.SE, // Replace with a strong secret key
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: false } // Set to true in production
+});
+
+app.use(session(sessionConfig));
 import cors from "cors"
 import connectDb from "../config/db.js"
 import cookieParser from "cookie-parser";
@@ -21,7 +31,7 @@ app.use(cors({
     credentials: true,    
 }))
 app.use(cookieParser())
-app.use(session);
+
 app.use('/api/v1/user',userRouter)
 app.use('/api/v1/products',productRouter)
 app.use('/api/v1/admin',adminRouter)
