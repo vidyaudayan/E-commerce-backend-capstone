@@ -26,7 +26,7 @@ export const signup=async(req,res)=>{
 }
 
  
-  const token= adminToken(newUserCreated);
+  const token= generateToken(newUserCreated);
   res.cookie("token",token, {secure:false})
 
 res.send("Signup successful")
@@ -52,7 +52,7 @@ if(!matchPassword){
     return res.send("password incorrect")
 }
 
-const token= adminToken(user)
+const token= generateToken(user)
 res.cookie("token", token,{secure:false});
 res.status(200).json({
   message : "Login successfully",
