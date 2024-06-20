@@ -2,7 +2,7 @@
 import express from "express";
 const app = express();
 import expressSession from 'express-session'
-
+app.use(session(sessionConfig));
 const session = expressSession({
   secret: process.env.SE, // Replace with a strong secret key
   resave: false,
@@ -10,7 +10,7 @@ const session = expressSession({
   cookie: { secure: false } // Set to true in production
 });
 
-app.use(session(sessionConfig));
+
 import cors from "cors"
 import connectDb from "../config/db.js"
 import cookieParser from "cookie-parser";
