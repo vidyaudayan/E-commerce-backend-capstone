@@ -1,5 +1,6 @@
 
 import express from "express";
+const app = express();
 import expressSession from 'express-session'
 
 const session = expressSession({
@@ -22,7 +23,7 @@ import cartRouter from "../routes/cartRoutes.js";
 import orderRouter from "../routes/orderRoutes.js";
 import paymentRouter from "../routes/paymentRoutes.js";
 import sellerRouter from "../routes/sellerRoutes.js";
-const app = express();
+
 
 app.use(express.json());
 
