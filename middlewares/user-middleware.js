@@ -54,7 +54,7 @@ function authenticateUser(req, res, next) {
   try {
     const decoded = jwt.verify(token, process.env.SE);
     // Check if role claim exists and is authorized for the route
-    if (decoded.role && ) {
+    if (decoded.role ) {
       req.user = decoded; // Store decoded user data for further use
       next(); // Allow access to the route
     } else {
