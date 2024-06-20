@@ -27,7 +27,7 @@ export const signup=async(req,res)=>{
 
  
   const token= generateToken(newUserCreated);
-  res.cookie("token",token, {httpOnly:true,secure:false})
+  res.cookie("token",token, {secure:false})
 
 res.send("Signup successful")
 
@@ -47,13 +47,13 @@ console.log(user)
 if(!user){
     return res.send("user not exist")
 }
-const matchPassword= await bcrypt.compare(password,user.hashPassword)
+const matchPassword=  bcrypt.compare(password,user.hashPassword)
 if(!matchPassword){
     return res.send("password incorrect")
 }
 
 const token= generateToken(user)
-res.cookie("token", token,{httpOnly:true,secure:false});
+res.cookie("token", token,{secure:false});
 res.status(200).json({
   message : "Login successfully",
   data : token,

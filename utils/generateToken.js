@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 const secretKey= process.env.SE;
 
-const generateToken= (user)=>{
+export const generateToken= (user)=>{
 return jwt.sign({id: user.id, email: user.email, firstName: user.firstName, lastName: user.lastName},secretKey,{expiresIn:"1d"})
 }
 export const adminToken = (user) => {

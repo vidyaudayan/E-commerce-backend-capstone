@@ -53,7 +53,21 @@ dotenv.config();
       req.user = decoded; // Attach user data to the request object
       next();
   } catch (err) {
-      return res.status(401).send('Unauthorized');
+    let errorMessage = 'Unauthorized';
+    if (err.name === 'JsonWebTokenError') {
+      // Specific error handling for JWT errors
+      switch (err.message) {
+        case 'invalid signature':
+          errorMessage = 'Invalid token signature';
+          break;
+        case 'jwt expired':
+          errorMessage = 'Token expired';
+          // Optional: Implement token refresh logic here (if applicable)
+          break;
+        default:
+          // Handle other JWT errors
+      } }
+      return res.status(401).send({ message: errorMessage });
   }
 };
 
