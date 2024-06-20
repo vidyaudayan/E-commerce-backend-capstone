@@ -2,7 +2,11 @@ import bcrypt from "bcrypt";
 import User from "../Model/userModel.js";
 import  generateToken, { adminToken }  from "../utils/generateToken.js";
 import crypto from 'crypto'
+import dotenv from "dotenv";
 
+dotenv.config();
+
+import expressSession from 'express-session'
 // create new user
  
 export const signup=async(req,res)=>{
@@ -39,7 +43,7 @@ res.send("Signup successful")
 };
 
 // user signin
-export const signin= async(req,res)=>{
+/*export const signin= async(req,res)=>{
     try{
 const {email,password,firstName,lastName}=req.body
 const user= await User.findOne({email})
@@ -66,7 +70,7 @@ res.status(200).json({
         console.log(error, "Something wrong");
         res.status(500).send("Internal Server Error");
     }
-}
+}*/
 
 
 // get user profile
@@ -210,3 +214,55 @@ export const resetPassword = async (req, res) => {
   }
 };
 
+
+
+
+
+// ... other imports
+
+const session = expressSession({
+  secret: process.env.SE, // Replace with a strong secret key
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: false } // Set to true in production
+});
+
+export const signin = async (req, res) => {
+  try {
+    const { email, password, firstName, lastName } = req.body;
+
+    const user = await User.findOne({ email });
+    console.log(user);
+
+    if (!user) {
+      return res.send("user not exist");
+    }
+
+    const matchPassword = await bcrypt.compare(password, user.hashPassword);
+    if (!matchPassword) {
+      return res.send("password incorrect");
+    }
+
+    // Generate a session ID
+    const token = await generateToken(); // Implement logic to generate a unique ID
+
+    // Create a new session with user data
+    req.session.user = user;
+    req.session.token = token;
+
+    // Save the session
+    await req.session.save();
+
+    // Set a cookie with the session ID (replace with your cookie name)
+    res.cookie('token', token, { secure: false }); 
+
+    res.status(200).json({
+      message: "Login successfully",
+      success: true,
+      error: false
+    });
+  } catch (error) {
+    console.log(error, "Something wrong");
+    res.status(500).send("Internal Server Error");
+  }
+};
