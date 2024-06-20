@@ -1,16 +1,19 @@
 
 import express from "express";
-const app = express();
+import dotenv from "dotenv";
+
+dotenv.config();
+
 import expressSession from 'express-session'
-app.use(session(sessionConfig));
-const session = expressSession({
+
+const sessionConfig={
   secret: process.env.SE, // Replace with a strong secret key
   resave: false,
   saveUninitialized: false,
   cookie: { secure: false } // Set to true in production
-});
-
-
+};
+const app = express();
+app.use(expressSession(sessionConfig))
 import cors from "cors"
 import connectDb from "../config/db.js"
 import cookieParser from "cookie-parser";

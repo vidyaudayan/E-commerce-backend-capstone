@@ -2,9 +2,7 @@ import bcrypt from "bcrypt";
 import User from "../Model/userModel.js";
 import  generateToken, { adminToken }  from "../utils/generateToken.js";
 import crypto from 'crypto'
-import dotenv from "dotenv";
 
-dotenv.config();
 
 
 // create new user
