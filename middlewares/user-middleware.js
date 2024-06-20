@@ -18,9 +18,9 @@ dotenv.config();
   });
 }*/
 
-const authenticateUser = (req, res, next) => {
+/*const authenticateUser = (req, res, next) => {
     const token = req.cookies.token ;
-  
+    console.log("token middle", token)
     if (!token) {
       return res.status(401).send('Access denied. No token provided.');
     }
@@ -34,10 +34,10 @@ const authenticateUser = (req, res, next) => {
       console.log(req.user)
       next();
     });
-  };
+  };*/
 
 
-/* const authenticateUser = (req, res, next) => {
+ const authenticateUser = (req, res, next) => {
   // Assuming you have some logic to verify the token and get user data
   const token = req.cookies.token ;
   console.log("token middle", token)
@@ -58,10 +58,10 @@ const authenticateUser = (req, res, next) => {
 };
 
 // Example token verification function (replace with your logic)
-const verifyToken = (token) => {
+//const verifyToken = (token) => {
   // Logic to verify token and return user data
   // For example:
-  return jwt.verify(token, process.env.SE);
-};*/
+  //return jwt.verify(token, process.env.SE);
+//};
 
 export default authenticateUser 
