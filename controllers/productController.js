@@ -171,7 +171,7 @@ export const getOneProductById= async (req, res) => {
    if(!product){
      res.status(404).json({error:'product not found'})
     }
-    res.json(product)
+    res.json(product)  
     }catch(error){
      console.log(error)
      res.status(500).json({error:'internal error'})
@@ -182,11 +182,83 @@ export const getOneProductById= async (req, res) => {
   export const searchProducts= async(req,res)=>{
     try{
 
-//const query= req.query.q
-//console.log("query",query)
+      const { search } = req.query;
+      console.log("query", req.query)
 
+      const params = new URLSearchParams(search);
+      const searchTerm = params.get('q');
+
+      console.log("Extracted search term:", searchTerm);
+      if (!search) {
+        return res.status(400).json({ error: 'Search query is required' });
+    }
+
+    // Simple text search in 'name' and 'description' fields (adjust fields as needed)
+    const searchRegex = new RegExp(searchTerm, 'i','g'); // 'i' for case-insensitive
+    const products = await Product.find({
+        $or: [
+            { title: searchRegex },
+            { slug: searchRegex },
+        ],
+    });
+
+    res.status(200).json(products);
+
+
+      if (!search) {
+          return res.status(400).json({ error: 'Search query is required' });
+      }
+     
+    
     }catch(error){
       console.log(error)
       res.status(500).json({error:'internal error'})
     }
-   }    
+   }              
+
+
+   //filter 
+  export const filter = async (req, res) => {
+    const { subCategories, sort,priceRange } = req.body;
+console.log("sort",sort)
+try {
+  let query = {};
+  if (subCategories && subCategories.length > 0) {
+      query.slug = { $in: subCategories };
+  }
+
+  if (priceRange) {
+    switch (priceRange) {
+        case 'below500':
+            query.sellingPrice = { $lt: 500 };
+            break;
+        case '500to1000':
+            query.sellingPrice = { $gte: 500, $lte: 1000 };
+            break;
+        case '1001to1500':
+            query.sellingPrice = { $gte: 1001, $lte: 1500 };
+            break;
+        case '1501to2000':
+            query.sellingPrice = { $gte: 1501, $lte: 2000 };
+            break;
+        case '2001to2500':
+            query.sellingPrice = { $gte: 2001, $lte: 2500 };
+            break;
+        default:
+            break;
+    }
+}
+
+  let sortOption = {};
+  if (sort === 'lowToHigh') {
+      sortOption = { sellingPrice: 1 };
+  } else if (sort === 'highToLow') {
+      sortOption = { sellingPrice: -1 };
+  }
+
+  const products = await Product.find(query).sort(sortOption);
+  res.json(products);
+} catch (err) {
+  res.status(500).json({ error: 'Error fetching products' });
+}
+};

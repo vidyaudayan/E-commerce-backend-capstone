@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 
- /*const authenticateUser = (req, res, next) => {
+ const authenticateUser = (req, res, next) => {
   // Assuming you have some logic to verify the token and get user data
   const token = req.cookies.token ;
   console.log("token middle", token)
@@ -19,6 +19,10 @@ dotenv.config();
   try {
       const decoded = jwt.verify(token, process.env.SE);
       req.user = decoded; // Attach user data to the request object
+      console.log("token decode", decoded)
+       //req.user= user
+      //console.log(req.user.role);
+  
       next();
   } catch (err) {
     let errorMessage = 'Unauthorized';
@@ -37,7 +41,7 @@ dotenv.config();
       } }
       return res.status(401).send({ message: errorMessage });
   }
-};*/
+};
 
 // Example token verification function (replace with your logic)
 //const verifyToken = (token) => {
@@ -73,7 +77,7 @@ dotenv.config();
 
 
 
-function  authenticateUser (req, res, next) {
+/*function  authenticateUser (req, res, next) {
   const token = req.cookies.token;
 
 const decoded= jwt.verify(token, process.env.SE, (err, user) => {
@@ -91,7 +95,7 @@ console.log(req.user)
     }
     next();
   });
-}
+}*/
 
 
 export default authenticateUser 

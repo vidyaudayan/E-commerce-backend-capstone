@@ -1,19 +1,16 @@
 
 import express from "express";
-import dotenv from "dotenv";
 
-dotenv.config();
+//import expressSession from 'express-session'
 
-import expressSession from 'express-session'
-
-const sessionConfig={
+/*const sessionConfig={
   secret: process.env.SE, // Replace with a strong secret key
   resave: false,
   saveUninitialized: false,
   cookie: { secure: false } // Set to true in production
-};
+};*/
 const app = express();
-app.use(expressSession(sessionConfig))
+//app.use(expressSession(sessionConfig))
 import cors from "cors"
 import connectDb from "../config/db.js"
 import cookieParser from "cookie-parser";
@@ -30,10 +27,10 @@ import sellerRouter from "../routes/sellerRoutes.js";
 
 app.use(express.json());
 
-app.use(cors({
+/*app.use(cors({
     origin: 'https://imaginative-genie-54ec39.netlify.app' ,
     credentials: true,    
-}))
+}))*/
 app.use(cookieParser())
 
 app.use('/api/v1/user',userRouter)

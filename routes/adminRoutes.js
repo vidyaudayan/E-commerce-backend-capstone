@@ -25,13 +25,27 @@ import cors from 'cors'
     origin: process.env.FRONT_END_URL2, 
     credentials: true,              
     optionsSuccessStatus: 200        
-  };
+  };*/
+const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174'];
 
-  adminRouter.use(cors(corsOptions));*/
-  adminRouter.use(cors({
+  const corsOptions = {
+    origin: (origin, callback) => {
+      if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    credentials: true,   
+    optionsSuccessStatus: 200,
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Custom-Header'],
+  allowedMethods: ['GET', 'POST', 'PUT', 'DELETE'],       
+  };    
+  adminRouter.use(cors(corsOptions));
+ /* adminRouter.use(cors({
     origin: 'https://imaginative-genie-54ec39.netlify.app' ,
     credentials: true,    
-}))
+}))*/ 
 
 adminRouter.use(express.json());
 

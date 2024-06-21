@@ -41,7 +41,7 @@ res.send("Signup successful")
 };
 
 // user signin
-/*export const signin= async(req,res)=>{
+export const signin= async(req,res)=>{
     try{
 const {email,password,firstName,lastName}=req.body
 const user= await User.findOne({email})
@@ -68,7 +68,7 @@ res.status(200).json({
         console.log(error, "Something wrong");
         res.status(500).send("Internal Server Error");
     }
-}*/
+}
 
 
 // get user profile
@@ -220,7 +220,7 @@ export const resetPassword = async (req, res) => {
 
 
 
-export const signin = async (req, res) => {
+/*export const signin = async (req, res) => {
   try {
     const { email, password, firstName, lastName } = req.body;
 
@@ -258,4 +258,4 @@ export const signin = async (req, res) => {
     console.log(error, "Something wrong");
     res.status(500).send("Internal Server Error");
   }
-};
+};*/
