@@ -55,7 +55,10 @@ if(!matchPassword){
 }
 
 const token= generateToken(user)
-res.cookie("token", token,{secure:false, sameSite:None});
+res.cookie("token", token,{secure: true, // Ensure the cookie is sent over HTTPS
+  sameSite: 'None', // Allow the cookie to be sent with cross-site requests
+  httpOnly: true, // Make the cookie inaccessible to JavaScript on the client-side
+  maxAge: 24 * 60 * 60 * 1000 });
 res.status(200).json({
   message : "Login successfully",
   data : token,
@@ -115,7 +118,7 @@ export const getUserReviews = async (req, res) => {
 export const logout = (req, res) => {
   try {
    
-    res.clearCookie('token',{secure:false, sameSite:None});
+    res.clearCookie('token',{secure:true, httpOnly: true, sameSite:None});
     
     res.status(200).json({ message: 'Logout successful',error : false,
     success : true,
