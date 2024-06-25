@@ -9,21 +9,21 @@ const paymentSchema = new mongoose.Schema(
       },
       payment_method: {
         type: String,
-        required: true
+       
       },
       payment_status: {
         type: String,
-        required: true,
+       
         enum: ['pending', 'completed', 'failed'],
         default: 'pending'
       },
       amount: {
         type: Number,
-        required: true
+    
       },
       transaction: {
         type: String,
-        required: true
+       
       },
       },
   { timestamps : true }

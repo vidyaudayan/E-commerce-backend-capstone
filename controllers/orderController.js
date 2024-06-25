@@ -1,8 +1,8 @@
 import Order from '../Model/orderModel.js';
 import Product from '../Model/productModel.js';
-
+import Address from '../Model/AddressModel.js';
 // Create order
-export const createOrder = async (req, res) => {
+/*export const createOrder = async (req, res) => {
   try {
     const { products, paymentId,user_id } = req.body;
   
@@ -29,7 +29,7 @@ export const createOrder = async (req, res) => {
     console.error(error)
     res.status(500).json({ message: 'Server error' });
   }
-};
+};*/
 
 
 // view user order
@@ -65,3 +65,44 @@ export const getUserOrders = async (req, res) => {
   };
   
   
+  export const createOrder = async (req, res) => {
+    try {
+      const { products, address,totalPrice } = req.body;
+      const user_id = req.user.id;
+      
+      console.log('Received order request');
+      console.log('Products:', products);
+      console.log(' price:', totalPrice);
+      console.log('User ID:', user_id);
+      console.log('Address:', address);
+      
+      const newAddress = new Address({
+        houseName: address.houseName,
+        street: address.street,
+        city: address.city,
+        state: address.state,
+        pinCode: address.pinCode,
+        country: address.country,
+      }); 
+      
+      await newAddress.save();
+      console.log("working",newAddress)
+   
+     
+  
+      const order = new Order({
+        user_id: user_id,
+        products,
+        total_price: totalPrice,
+        
+        address: newAddress._id, // Reference to the address
+      });
+  
+      await order.save();
+  console.log("order", order)
+      res.status(201).json(order);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Server error' });
+    }
+  };

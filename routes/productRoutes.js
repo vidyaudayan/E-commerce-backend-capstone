@@ -6,13 +6,13 @@ const productRouter = express.Router();
 import cors from 'cors'
 
 
-/*productRouter.use(cors({
+productRouter.use(cors({
     origin: 'https://imaginative-genie-54ec39.netlify.app' ,
     credentials: true,    
-}))  */ 
+}))  
 
 
-    const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174'];
+    /*const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174'];
 
     const corsOptions = {
       origin: (origin, callback) => {
@@ -27,7 +27,7 @@ import cors from 'cors'
       allowedHeaders: ['Content-Type', 'Authorization', 'X-Custom-Header'],
   allowedMethods: ['GET', 'POST', 'PUT', 'DELETE'],      
     };    
-    productRouter.use(cors(corsOptions));  
+    productRouter.use(cors(corsOptions));  */
 
 productRouter.use("/products",productRouter)
   

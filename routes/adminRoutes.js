@@ -21,12 +21,13 @@ import { getAllPayments, updatePaymentStatus } from "../controllers/adminControl
 import authenticateUser from "../middlewares/user-middleware.js";
 const adminRouter = express.Router();
 import cors from 'cors'
+
 /*const corsOptions = {
     origin: process.env.FRONT_END_URL2, 
     credentials: true,              
     optionsSuccessStatus: 200        
   };*/
-const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174'];
+/*const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174'];
 
   const corsOptions = {
     origin: (origin, callback) => {
@@ -41,14 +42,14 @@ const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174'];
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Custom-Header'],
   allowedMethods: ['GET', 'POST', 'PUT', 'DELETE'],       
   };    
-  adminRouter.use(cors(corsOptions));
- /* adminRouter.use(cors({
+  adminRouter.use(cors(corsOptions));*/
+  adminRouter.use(cors({
     origin: 'https://imaginative-genie-54ec39.netlify.app' ,
     credentials: true,    
-}))*/ 
+}))
 
 adminRouter.use(express.json());
-
+adminRouter.use("/admin",adminRouter)
 adminRouter.post("/signup", singup);
 adminRouter.post("/signin", singin);
 adminRouter.get("/adminprofile",authenticateAdmin, getAdminProfile )

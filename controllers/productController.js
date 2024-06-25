@@ -252,9 +252,9 @@ try {
   let sortOption = {};
   if (sort === 'lowToHigh') {
       sortOption = { sellingPrice: 1 };
-  } else if (sort === 'highToLow') {
+  } else if (sort === 'highToLow') {  
       sortOption = { sellingPrice: -1 };
-  }
+  }    
 
   const products = await Product.find(query).sort(sortOption);
   res.json(products);

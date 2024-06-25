@@ -5,21 +5,24 @@ import User from "../Model/userModel.js";
 // Create a new review
 export const createReview = async (req, res) => {
   try {
-    const { product_id, rating, comment,user_id } = req.body;
+   
+    const { product_id, rating, comment} = req.body;
   
+    const user_id = req.user.id;
+   
     const product = await Product.findById(product_id);
     if (!product) {
       return res.status(404).send('Product not found.');
     }
     const newReview = new Review({
       product_id,
-      user_id,
+      user_id,  
       rating,
       comment,
     });
 
     const savedReview = await newReview.save();
-   
+    console.log('review',savedReview)
     await User.findByIdAndUpdate(user_id, { $push: { reviews: savedReview._id } });
 
     res.status(201).json(savedReview);
@@ -29,7 +32,7 @@ export const createReview = async (req, res) => {
   }
 };
 
-
+ 
 
 // Get all reviews for a product
 export const getProductReviews = async (req, res) => {

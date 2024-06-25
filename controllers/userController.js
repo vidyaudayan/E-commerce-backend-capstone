@@ -115,7 +115,7 @@ export const getUserReviews = async (req, res) => {
 export const logout = (req, res) => {
   try {
    
-    res.clearCookie('token');
+    res.clearCookie('token',{secure:false});
     
     res.status(200).json({ message: 'Logout successful',error : false,
     success : true,

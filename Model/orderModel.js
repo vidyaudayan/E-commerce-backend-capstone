@@ -19,10 +19,7 @@ const orderSchema = new mongoose.Schema(
             required: true,
             min: 1
           },
-          price_at_purchase: {
-            type: Number,
-            required: true
-          }
+         
         }
       ],
       total_price: {
@@ -37,7 +34,12 @@ const orderSchema = new mongoose.Schema(
       payment_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Payment',
-        required: true
+       
+      },
+      address: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Address',
+       
       },
       },
   { timestamps : true }
