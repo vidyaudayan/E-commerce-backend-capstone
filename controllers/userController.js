@@ -55,9 +55,9 @@ if(!matchPassword){
 }
 
 const token= generateToken(user)
-res.cookie("token", token,{secure: true, // Ensure the cookie is sent over HTTPS
-  sameSite: 'None', // Allow the cookie to be sent with cross-site requests
-  httpOnly: true, // Make the cookie inaccessible to JavaScript on the client-side
+res.cookie("token", token,{secure: true, 
+  sameSite: 'None', 
+  httpOnly: true, 
   maxAge: 24 * 60 * 60 * 1000 });
 res.status(200).json({
   message : "Login successfully",
@@ -119,9 +119,9 @@ export const logout = (req, res) => {
   try {
    
     res.clearCookie('token', {
-      secure: true, // should match the 'secure' flag used when the cookie was set
-      sameSite: 'None', // should match the 'sameSite' flag used when the cookie was set
-      httpOnly: true, // should match the 'httpOnly' flag used when the cookie was set
+      secure: true, 
+      sameSite: 'None', 
+      httpOnly: true, 
     });
     
     res.status(200).json({ message: 'Logout successful',error : false,
@@ -223,46 +223,7 @@ export const resetPassword = async (req, res) => {
 
 
 
-// ... other imports
 
 
 
-/*export const signin = async (req, res) => {
-  try {
-    const { email, password, firstName, lastName } = req.body;
 
-    const user = await User.findOne({ email });
-    console.log(user);
-
-    if (!user) {
-      return res.send("user not exist");
-    }
-
-    const matchPassword = await bcrypt.compare(password, user.hashPassword);
-    if (!matchPassword) {
-      return res.send("password incorrect");
-    }
-
-    // Generate a session ID
-    const token = await generateToken(); // Implement logic to generate a unique ID
-
-    // Create a new session with user data
-    req.session.user = user;
-    req.session.token = token;
-
-    // Save the session
-    await req.session.save();
-
-    // Set a cookie with the session ID (replace with your cookie name)
-    res.cookie('token', token, { secure: false }); 
-
-    res.status(200).json({
-      message: "Login successfully",
-      success: true,
-      error: false
-    });
-  } catch (error) {
-    console.log(error, "Something wrong");
-    res.status(500).send("Internal Server Error");
-  }
-};*/

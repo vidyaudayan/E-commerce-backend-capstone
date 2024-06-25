@@ -42,7 +42,7 @@ export const getCategoryWiseProduct = async(req,res)=>{
          
         console.log("category", productCategory)
 
-        //array to store one product from each category
+        
         const productByCategory = []
 
         for(const category of productCategory){
@@ -71,7 +71,7 @@ export const getCategoryWiseAllProducts = async(req,res)=>{
   
     const { category } = req.body;
 
-    // Convert category to ObjectId if it's a valid hex string
+    
     if (mongoose.Types.ObjectId.isValid(category)) {
       const categoryId = new mongoose.Types.ObjectId(category);
       const products = await Product.find({ category: categoryId });

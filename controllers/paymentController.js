@@ -100,8 +100,8 @@ export const createCheckout = async (req, res) => {
       //success_url:"https://imaginative-genie-54ec39.netlify.app/success",
       //cancel_url:"https://imaginative-genie-54ec39.netlify.app/cancel",
    
-      success_url: `${process.env.FRONTEND_URL}/payment/success`,
-      cancel_url: `${process.env.FRONTEND_URL}/payment/cancel`,
+      success_url: `${process.env.FRONTEND_URL}/success`,
+      cancel_url: `${process.env.FRONTEND_URL}/cancel`,
     };
 
    
@@ -109,7 +109,7 @@ export const createCheckout = async (req, res) => {
 
     const session = await stripe.checkout.sessions.create(params);
     console.log("session", session);
-    res.status(200).json(session);
+    res.status(303).json(session);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });

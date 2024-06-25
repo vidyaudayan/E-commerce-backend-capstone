@@ -95,7 +95,7 @@ export const getUserOrders = async (req, res) => {
         products,
         total_price: totalPrice,
         
-        address: newAddress._id, // Reference to the address
+        address: newAddress._id, 
       });
   
       await order.save();
