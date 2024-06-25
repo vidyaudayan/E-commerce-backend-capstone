@@ -97,8 +97,11 @@ export const createCheckout = async (req, res) => {
       //success_url: "http://localhost:5173/success",
       //cancel_url: "http://localhost:5173/cancel",
 
-      success_url:"https://imaginative-genie-54ec39.netlify.app/success",
-      cancel_url:"https://imaginative-genie-54ec39.netlify.app/cancel",
+      //success_url:"https://imaginative-genie-54ec39.netlify.app/success",
+      //cancel_url:"https://imaginative-genie-54ec39.netlify.app/cancel",
+   
+      success_url: `${process.env.FRONTEND_URL}/success`,
+      cancel_url: `${process.env.FRONTEND_URL}/cancel`,
     };
 
    
