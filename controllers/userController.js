@@ -55,7 +55,7 @@ if(!matchPassword){
 }
 
 const token= generateToken(user)
-res.cookie("token", token,{secure:false});
+res.cookie("token", token,{secure:false, sameSite:None});
 res.status(200).json({
   message : "Login successfully",
   data : token,
@@ -115,7 +115,7 @@ export const getUserReviews = async (req, res) => {
 export const logout = (req, res) => {
   try {
    
-    res.clearCookie('token',{secure:false});
+    res.clearCookie('token',{secure:false, sameSite:None});
     
     res.status(200).json({ message: 'Logout successful',error : false,
     success : true,
