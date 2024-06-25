@@ -109,7 +109,7 @@ export const createCheckout = async (req, res) => {
 
     const session = await stripe.checkout.sessions.create(params);
     console.log("session", session);
-    res.status(303).json(session);
+    res.status(200).json(session);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
