@@ -118,7 +118,11 @@ export const getUserReviews = async (req, res) => {
 export const logout = (req, res) => {
   try {
    
-    res.clearCookie('token',{secure:true, httpOnly: true, sameSite:None});
+    res.clearCookie('token', {
+      secure: true, // should match the 'secure' flag used when the cookie was set
+      sameSite: 'None', // should match the 'sameSite' flag used when the cookie was set
+      httpOnly: true, // should match the 'httpOnly' flag used when the cookie was set
+    });
     
     res.status(200).json({ message: 'Logout successful',error : false,
     success : true,
