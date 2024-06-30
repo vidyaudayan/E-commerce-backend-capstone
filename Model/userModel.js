@@ -37,6 +37,7 @@ const userSchema = new mongoose.Schema(
     resetTokenExpiration: Date,
     products: [{ type: mongoose.Types.ObjectId, ref: "Product" }],
     reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
+    orders: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Order' }],
   },
   { timestamps : true }
 );

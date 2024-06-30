@@ -1,6 +1,7 @@
 import Order from '../Model/orderModel.js';
 import Product from '../Model/productModel.js';
 import Address from '../Model/AddressModel.js';
+import User from '../Model/userModel.js';
 // Create order
 /*export const createOrder = async (req, res) => {
   try {
@@ -35,10 +36,15 @@ import Address from '../Model/AddressModel.js';
 // view user order
 export const getUserOrders = async (req, res) => {
     try {
-      const {user_id} = req.params;
-    
-      const orders = await Order.find( user_id ).populate('products.product_id', 'name price');
-  
+      const userId = req.user.id;
+    console.log("user id",userId)
+      const orders = await Order.find({ user: userId }).populate('products.product_id', 'name price');
+  console.log("orders",orders)
+
+  if (!orders) {
+    console.log("No orders found for user:", userId);
+    return res.status(200).json({ message: 'No orders found' });
+  }
       res.status(200).json(orders);
     } catch (error) {
       console.error(error);
@@ -57,7 +63,7 @@ export const getUserOrders = async (req, res) => {
         return res.status(404).json({ message: 'Order not found' });
       }
   
-      res.status(200).json(order);
+      res.status(200).json(order);  
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'Server error' });

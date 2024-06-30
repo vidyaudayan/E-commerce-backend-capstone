@@ -150,3 +150,30 @@ export const deleteCategory = async (req, res) => {
     res.status(500).send('Server error');
   }
 };
+
+// get Category and slug wise all products
+
+export const getCategorySlugWiseAllProducts = async (req, res) => {
+  try {
+    const { category, slug } = req.body;
+
+    let query = {};
+    if (category && mongoose.Types.ObjectId.isValid(category)) {
+      query.category = new mongoose.Types.ObjectId(category);
+    }
+    if (slug) {
+      query.slug = slug;
+    }  
+
+    const products = await Product.find(query);
+    res.json({
+      message: "products",
+      data: products,
+      success: true,
+      error: false
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server error.');
+  }
+};

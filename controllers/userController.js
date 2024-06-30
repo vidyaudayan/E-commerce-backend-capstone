@@ -96,13 +96,13 @@ console.log(user)
     console.error(error);
     res.status(500).send('Server error');
   }
-};
+};  
 
 
 //Get user reviews
 export const getUserReviews = async (req, res) => {
   try {
-    const user = await User.findById(req.user._id).populate('reviews');
+    const user = await User.findById(req.user.id).populate('reviews');
     if (!user) {
       return res.status(404).send('User not found.');
     }
@@ -113,6 +113,19 @@ export const getUserReviews = async (req, res) => {
   }
 };
 
+// user orders
+export const getUserOrders = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).populate('orders');
+    if (!user) {
+      return res.status(404).send('User not found.');
+    }
+    res.status(200).json(user.orders);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server error.');
+  }
+};
 // user logout
 
 export const logout = (req, res) => {

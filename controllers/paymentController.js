@@ -1,7 +1,10 @@
 import Payment from "../Model/paymentModel.js";
 import Order from "../Model/orderModel.js";
 import stripe from "../config/stripe.js";
+import Cart from "../Model/cartModel.js";
 import { decode } from "jsonwebtoken";
+
+
 // Create payment
 
 export const createPayment = async (req, res) => {
@@ -51,6 +54,8 @@ export const getPaymentById = async (req, res) => {
   }
 };
 
+
+
 export const createCheckout = async (req, res) => {
   try {
   
@@ -94,24 +99,54 @@ export const createCheckout = async (req, res) => {
         
       }),
 
-      //success_url: "http://localhost:5173/success",
+     
+     //success_url: `http://localhost:5173/success?session_id={CHECKOUT_SESSION_ID}`,
       //cancel_url: "http://localhost:5173/cancel",
 
-      //success_url:"https://imaginative-genie-54ec39.netlify.app/success",
-      //cancel_url:"https://imaginative-genie-54ec39.netlify.app/cancel",
+      
    
-      success_url: `${process.env.FRONTEND_URL}/success`,
+      success_url: `${process.env.FRONTEND_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.FRONTEND_URL}/cancel`,
     };
 
-   
-
-
+  
     const session = await stripe.checkout.sessions.create(params);
     console.log("session", session);
+
+    
+   /// await Cart.findOneAndUpdate({ user_id: req.user.id}, { items: [] });
     res.status(200).json(session);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
   }
 };
+  
+//checkoutSuccess
+
+export const checkoutSuccess = async (req, res) => {
+  try {
+    const { sessionId } = req.body; 
+console.log("workk", req.body)
+   
+    const session = await stripe.checkout.sessions.retrieve(sessionId);
+
+    if (!session || session.payment_status !== "paid") {
+      return res.status(400).json({ message: "Invalid or unpaid session" });
+    }    
+
+    const userId = session.metadata.userId; 
+
+
+    await Cart.findOneAndUpdate({ user_id: userId }, { items: [] },{ $set: { products: [] } });
+  
+
+    const orderId = session.metadata.orderId; 
+    await Order.findByIdAndUpdate(orderId, { status: "paid" });
+
+    res.status(200).json({ message: "Payment successful, cart cleared, and order status updated" });
+  } catch (error) {
+    console.error("Error in checkout success handler: ", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};  
