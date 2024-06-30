@@ -4,13 +4,13 @@ import authenticateUser from "../middlewares/user-middleware.js";
 const reviewRouter = express.Router();
 
 import cors from 'cors'
-/*reviewRouter.use(cors({
+reviewRouter.use(cors({
     origin: 'https://imaginative-genie-54ec39.netlify.app' ,
     credentials: true,    
-}))*/
+}))
 
 
-const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174'];
+/*const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174'];
 
   const corsOptions = {
     origin: (origin, callback) => {
@@ -25,7 +25,7 @@ const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174'];
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Custom-Header'],
   allowedMethods: ['GET', 'POST', 'PUT', 'DELETE'],      
   };    
-  reviewRouter.use(cors(corsOptions));
+  reviewRouter.use(cors(corsOptions));*/
 
 reviewRouter.use("/review",reviewRouter)
 reviewRouter.post("/add-review",authenticateUser, createReview);

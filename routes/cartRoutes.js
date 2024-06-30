@@ -5,7 +5,7 @@ import { clearCartAfterPayment } from "../controllers/cartController.js";
 const cartRouter = express.Router();
 import cors from 'cors'
 cartRouter.use("/cart",cartRouter)
-const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174'];
+/*const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174'];
 
   const corsOptions = {
     origin: (origin, callback) => {
@@ -19,10 +19,10 @@ const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174'];
     optionsSuccessStatus: 200 ,
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Custom-Header'],
   allowedMethods: ['GET', 'POST', 'PUT', 'DELETE'],     
-  };    
+  };*/
 
 
-  /*cartRouter.use(cors({
+  cartRouter.use(cors({
     origin: 'https://imaginative-genie-54ec39.netlify.app' ,
     credentials: true,    
 }))
@@ -33,7 +33,7 @@ const corsOptions = {
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed methods for CORS requests
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'], // Allowed headers
   // ... other options if needed
-};*/
+};
 
 cartRouter.use(cors(corsOptions));
 

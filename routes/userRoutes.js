@@ -4,10 +4,10 @@ import authenticateUser from "../middlewares/user-middleware.js";
 const userRouter = express.Router();
 userRouter.use("/user",userRouter)
 import cors from 'cors'
-/*userRouter.use(cors({
+userRouter.use(cors({
     origin: 'https://imaginative-genie-54ec39.netlify.app' ,
     credentials: true,    
-}))*/
+}))
 userRouter.use(express.json());
 /*const corsOptions = {
   origin:  'https://imaginative-genie-54ec39.netlify.app' ,
@@ -18,7 +18,7 @@ userRouter.use(express.json());
 };*/
 
 
-const allowedOrigins =['http://localhost:5173', 'http://localhost:5174'];
+/*const allowedOrigins =['http://localhost:5173', 'http://localhost:5174'];
 
   const corsOptions = {
     origin: (origin, callback) => {
@@ -35,7 +35,7 @@ const allowedOrigins =['http://localhost:5173', 'http://localhost:5174'];
   };    
     
 
-userRouter.use(cors(corsOptions));
+userRouter.use(cors(corsOptions));*/
 
 
 
