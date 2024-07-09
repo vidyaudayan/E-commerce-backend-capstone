@@ -4,16 +4,16 @@ import authenticateUser from "../middlewares/user-middleware.js";
 const orderRouter = express.Router();
 import cors from 'cors'
 orderRouter.use("/order",orderRouter);
-orderRouter.use(cors({
+/*orderRouter.use(cors({
     origin: 'https://imaginative-genie-54ec39.netlify.app' ,
     credentials: true,    
 }))
 orderRouter.use(cors({
   origin: 'https://singular-axolotl-e26885.netlify.app' ,
   credentials: true,    
-}))
+}))*/
 
-/*const allowedOrigins = ['http://localhost:5174', 'http://localhost:5173'];
+const allowedOrigins =['https://singular-axolotl-e26885.netlify.app', 'https://imaginative-genie-54ec39.netlify.app'];
 
   const corsOptions = {
     origin: (origin, callback) => {
@@ -22,13 +22,15 @@ orderRouter.use(cors({
       } else {
         callback(new Error('Not allowed by CORS'));
       }
-    },  
+    },
     credentials: true,   
-    optionsSuccessStatus: 200,
+    optionsSuccessStatus: 200 ,
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Custom-Header'],
-  allowedMethods: ['GET', 'POST', 'PUT', 'DELETE'],      
+  allowedMethods: ['GET', 'POST', 'PUT', 'DELETE'],     
   };    
-  orderRouter.use(cors(corsOptions));*/
+    
+
+userRouter.use(cors(corsOptions));
 
 
 orderRouter.post("/",authenticateUser, createOrder);

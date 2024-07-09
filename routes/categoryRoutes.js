@@ -4,14 +4,7 @@ import  {getCategories, getCategoryById, getCategoryWiseAllProducts, getCategory
 const categoryRouter = express.Router();
 
 import cors from 'cors'
-/*const corsOptions = {
-    origin: 'http://localhost:5174', 
-    origin: 'http://localhost:5173',
-    credentials: true,               
-    optionsSuccessStatus: 200      
-  };*/
-   
- /* const allowedOrigins = ['http://localhost:5174', 'http://localhost:5173'];
+const allowedOrigins =['https://singular-axolotl-e26885.netlify.app', 'https://imaginative-genie-54ec39.netlify.app'];
 
   const corsOptions = {
     origin: (origin, callback) => {
@@ -24,12 +17,13 @@ import cors from 'cors'
     credentials: true,   
     optionsSuccessStatus: 200 ,
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Custom-Header'],
-  allowedMethods: ['GET', 'POST', 'PUT', 'DELETE'],  
-  }; 
+  allowedMethods: ['GET', 'POST', 'PUT', 'DELETE'],     
+  };    
+    
 
-  categoryRouter.use(cors(corsOptions));*/
+userRouter.use(cors(corsOptions));
 
- categoryRouter.use(cors({
+ /*categoryRouter.use(cors({
     origin: 'https://imaginative-genie-54ec39.netlify.app' ,
     credentials: true,    
 }))
@@ -37,7 +31,7 @@ import cors from 'cors'
 categoryRouter.use(cors({
   origin: 'https://singular-axolotl-e26885.netlify.app' ,
   credentials: true,    
-}))
+}))*/
 
 categoryRouter.use("/categories",categoryRouter)
 
