@@ -11,7 +11,10 @@ productRouter.use(cors({
     credentials: true,    
 })) 
 
-
+productRouter.use(cors({
+  origin: 'https://singular-axolotl-e26885.netlify.app' ,
+  credentials: true,    
+}))
     /*const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174'];
 
     const corsOptions = {

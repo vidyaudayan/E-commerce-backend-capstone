@@ -8,6 +8,11 @@ userRouter.use(cors({
     origin: 'https://imaginative-genie-54ec39.netlify.app' ,
     credentials: true,    
 }))
+
+userRouter.use(cors({
+  origin: 'https://singular-axolotl-e26885.netlify.app' ,
+  credentials: true,    
+}))
 userRouter.use(express.json());
 const corsOptions = {
   origin:  'https://imaginative-genie-54ec39.netlify.app' ,

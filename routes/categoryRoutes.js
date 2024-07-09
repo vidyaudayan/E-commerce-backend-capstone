@@ -34,6 +34,11 @@ import cors from 'cors'
     credentials: true,    
 }))
 
+categoryRouter.use(cors({
+  origin: 'https://singular-axolotl-e26885.netlify.app' ,
+  credentials: true,    
+}))
+
 categoryRouter.use("/categories",categoryRouter)
 
 categoryRouter.get("/", getCategories);
