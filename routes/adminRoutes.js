@@ -12,12 +12,14 @@ import {
   deleteUser, updateProduct,
   deleteProduct,
   updateOrderStatus,
-  getAdminProfile
+  getAdminProfile,
+  updateProductStatus
 } from "../controllers/adminController.js";
 import { getAllUsers } from "../controllers/adminController.js";
 import authenticateAdmin from "../middlewares/adminMiddleware.js";
 import { createCategory, deleteCategory, updateCategory } from "../controllers/categoryController.js";
 import { getAllPayments, updatePaymentStatus } from "../controllers/adminController.js";
+import getAllOrders, { placeOrder } from '../controllers/orderController.js'
 import authenticateUser from "../middlewares/user-middleware.js";
 const adminRouter = express.Router();
 import cors from 'cors'
@@ -27,7 +29,7 @@ import cors from 'cors'
     credentials: true,              
     optionsSuccessStatus: 200        
   };*/
-/*const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174'];
+const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174'];
 
   const corsOptions = {
     origin: (origin, callback) => {
@@ -42,11 +44,11 @@ import cors from 'cors'
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Custom-Header'],
   allowedMethods: ['GET', 'POST', 'PUT', 'DELETE'],       
   };    
-  adminRouter.use(cors(corsOptions));*/
-  adminRouter.use(cors({
+  adminRouter.use(cors(corsOptions));
+ /* adminRouter.use(cors({
     origin: 'https://imaginative-genie-54ec39.netlify.app' ,
     credentials: true,    
-}))
+}))*/
 
 adminRouter.use(express.json());
 adminRouter.use("/admin",adminRouter)
@@ -66,15 +68,18 @@ adminRouter.get("/get-products", getAllProducts);
 adminRouter.post("/add-products",authenticateAdmin, upload.array('productPictures'), addProduct);
 adminRouter.put("/update-product/:id",authenticateAdmin, updateProduct);
 adminRouter.delete("/delete-product/:id",authenticateAdmin, deleteProduct);
-
+adminRouter.patch('/update-productstatus/:id',authenticateAdmin,updateProductStatus)
 
 adminRouter.post("/add-category",authenticateAdmin, createCategory);
 adminRouter.put("/update-category/:id",authenticateAdmin, updateCategory);
 adminRouter.delete("/delete-category/:id",authenticateAdmin, deleteCategory);
 
+adminRouter.get('/get-allorders',authenticateAdmin,getAllOrders)
 adminRouter.put("/update-order/:orderId",authenticateAdmin, updateOrderStatus);
+adminRouter.post('/place-order', authenticateAdmin, placeOrder)
+
 
 adminRouter.get("/get-payments", authenticateUser, authenticateAdmin, getAllPayments);
 adminRouter.put('/update-paymentstatus/:paymentId', authenticateUser, authenticateAdmin, updatePaymentStatus);
 
-export default adminRouter;  
+export default adminRouter;     

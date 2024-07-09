@@ -33,7 +33,8 @@ const productSchema = new mongoose.Schema(
       
       
   },
-    productPictures: [ ],
+  status: { type: String, default: 'unverified' },
+    productPictures: [String ],
     reviews: [
         {
             userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},

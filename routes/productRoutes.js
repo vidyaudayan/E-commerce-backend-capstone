@@ -27,7 +27,7 @@ productRouter.use(cors({
       allowedHeaders: ['Content-Type', 'Authorization', 'X-Custom-Header'],
   allowedMethods: ['GET', 'POST', 'PUT', 'DELETE'],      
     };    
-    productRouter.use(cors(corsOptions))*/;  
+    productRouter.use(cors(corsOptions)); */ 
 
 productRouter.use("/products",productRouter)
   

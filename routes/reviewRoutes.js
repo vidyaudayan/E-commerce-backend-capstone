@@ -18,7 +18,7 @@ reviewRouter.use(cors({
         callback(null, true);
       } else {
         callback(new Error('Not allowed by CORS'));
-      }
+      } 
     },
     credentials: true,   
     optionsSuccessStatus: 200,
@@ -34,4 +34,4 @@ reviewRouter.get('/:id', getReviewById);
 reviewRouter.put('/update-review/:id', authenticateUser, updateReview);
 reviewRouter.delete('/delete-review/:id', authenticateUser, deleteReview);
 
-export default reviewRouter;
+export default reviewRouter;  

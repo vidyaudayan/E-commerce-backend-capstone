@@ -66,7 +66,10 @@ import Payment from "../Model/paymentModel.js";
       }
   
       const token = adminToken(admin);
-      res.cookie("token", token,{httpOnly:true,secure:false});
+      res.cookie("token", token,{secure: true, 
+        sameSite: 'None', 
+        httpOnly: true, 
+        maxAge: 24 * 60 * 60 * 1000 });
       res.status(200).json({
         message : "Login successfully",
         data : token,
@@ -147,7 +150,7 @@ return res.status(404).send('admin not found');
        console.log(error)
        res.status(500).json({error:'internal error'})
       }
-  }
+  } 
 
 
 // Update user
@@ -215,6 +218,23 @@ return res.status(404).send('admin not found');
 
   }
    
+
+  // Update product status
+
+ export const updateProductStatus = async (req, res) => {
+    try {
+        const product = await Product.findById(req.params.id);
+        if (product) {
+            product.status = req.body.status || product.status;
+            const updatedProduct = await product.save();
+            res.json(updatedProduct);
+        } else {
+            res.status(404).json({ message: 'Product not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Server Error' });
+    }
+};
 
   // delete product
   export const deleteProduct = async (req, res) => {

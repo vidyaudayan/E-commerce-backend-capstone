@@ -9,13 +9,13 @@ userRouter.use(cors({
     credentials: true,    
 }))
 userRouter.use(express.json());
-/*const corsOptions = {
+const corsOptions = {
   origin:  'https://imaginative-genie-54ec39.netlify.app' ,
   credentials: true, // Allow cookies for cross-origin requests
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed methods for CORS requests
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'], // Allowed headers
   // ... other options if needed
-};*/
+};
 
 
 /*const allowedOrigins =['http://localhost:5173', 'http://localhost:5174'];

@@ -5,20 +5,21 @@ const orderSchema = new mongoose.Schema(
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: true
+     
       },
       products: [
         {
           product_id: {
             type:mongoose. Schema.Types.ObjectId,
             ref: 'Product',
-            required: true
+           
           },
           quantity: {
             type: Number,
-            required: true,
+        
             min: 1
           },
+     
          
         }
       ],
@@ -41,9 +42,12 @@ const orderSchema = new mongoose.Schema(
         ref: 'Address',
        
       },
+      customer: {
+        name: { type: String }
+    }
       },
   { timestamps : true }
 );
 
 const Order= mongoose.model("Order", orderSchema);
-export default Order;
+export default Order;    
