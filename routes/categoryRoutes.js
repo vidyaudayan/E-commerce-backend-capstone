@@ -21,7 +21,7 @@ const allowedOrigins =['https://singular-axolotl-e26885.netlify.app', 'https://i
   };    
     
 
-userRouter.use(cors(corsOptions));
+categoryRouter.use(cors(corsOptions));
 
  /*categoryRouter.use(cors({
     origin: 'https://imaginative-genie-54ec39.netlify.app' ,

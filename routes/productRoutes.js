@@ -32,7 +32,7 @@ allowedMethods: ['GET', 'POST', 'PUT', 'DELETE'],
 };    
   
 
-userRouter.use(cors(corsOptions));
+productRouter.use(cors(corsOptions));
 
 productRouter.use("/products",productRouter)
   

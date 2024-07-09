@@ -30,7 +30,7 @@ const allowedOrigins =['https://singular-axolotl-e26885.netlify.app', 'https://i
   };    
     
 
-userRouter.use(cors(corsOptions));
+orderRouter.use(cors(corsOptions));
 
 
 orderRouter.post("/",authenticateUser, createOrder);
